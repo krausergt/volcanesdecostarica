@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Volcanes de Costa Rica</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+    <string name="Medium_Text">Medium Text</string>
+    <string name="turrialba">Turrialba</string>
+    <string name="poas">Poás</string>
+    <string name="irazu">Irazú</string>
+    <string name="title_activity_photo_live_viewer">Cámara en Vivo</string>
+    <string name="image_description">Imagen del volcán</string>
+    <string name="url_main">http://www.ovsicori.una.ac.cr/images/stories/live</string>
+    <string name="turrialba_feed">turrialba</string>
+    <string name="poas_feed">poas</string>
+    <string name="irazu_feed">irazu</string>
+    <string name="url_end">/camara.jpg?</string>
+    <string name="turrialba_info"><tt>Cámara ubicada en el cráter del volcán Turrialba, a unos 600 metros al Este del cráter activo (mirando hacia el oeste).</tt>\n<tt>La imagen se refresca cada 10 segundos.</tt></string>
+    <string name="poas_info"><tt>Cámara ubicada en la orilla Norte del cráter del volcán Póas.</tt>\n<tt>La imagen se refresca cada 10 segundos.</tt></string>
+    <string name="irazu_info"><tt>Cámara ubicada en la cima del Irazú con vista hacia el Este, se observa el cráter del Irazú y también se puede observar el Volcán Turrialba.</tt>\n<tt>La imagen se refresca cada 10 segundos.</tt></string>
+    <string name="source">Fuente: &lt;a href="http://www.ovsicori.una.ac.cr/" >OVSICORI-UNA&lt;/a></string>
+    <string name="decode_error">Problemas al obtener la imagen</string>
+    <string name="input_output_error">Input/Output error</string>
+    <string name="download_error">Downloads are denied</string>
+    <string name="out_of_memory_error">Out Of Memory error</string>
+    <string name="unknown_error">Unknown error</string>
+</resources>
