@@ -17,6 +17,11 @@ android {
         }
     }
     productFlavors {
+        Alpha {
+            minSdkVersion 15
+            applicationId 'krausoft.volcanesdecostarica'
+            targetSdkVersion 22
+        }
     }
 }
 
