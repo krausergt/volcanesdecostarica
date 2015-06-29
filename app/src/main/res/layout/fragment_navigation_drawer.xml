@@ -13,21 +13,26 @@
         android:paddingTop="@dimen/tool_bar_top_padding"
         android:background="@color/primary_dark">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/circleView"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="38dp"
-            android:src="@drawable/ic_action" />
-    </LinearLayout>
+        <include
+            android:id="@+id/header"
+            layout="@layout/header"/>
+        <!--
+              <de.hdodenhof.circleimageview.CircleImageView
+                   android:id="@+id/circleView"
+                   android:layout_width="70dp"
+                   android:layout_height="70dp"
+                   android:layout_marginLeft="16dp"
+                   android:layout_marginTop="38dp"
+                   android:src="@drawable/ic_action" />
+        -->
+           </LinearLayout>
 
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_below="@+id/container"
-        android:id="@+id/drawerList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+           <android.support.v7.widget.RecyclerView
+               android:layout_below="@+id/container"
+               android:id="@+id/drawerList"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
 
-    </android.support.v7.widget.RecyclerView>
-</RelativeLayout>
+           </android.support.v7.widget.RecyclerView>
+       </RelativeLayout>

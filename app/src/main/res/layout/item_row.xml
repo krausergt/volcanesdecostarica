@@ -10,19 +10,24 @@
 
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:id="@+id/rowIcon"
-        android:paddingLeft="16dp"
-        android:src="@drawable/ic_launcher"/>
+        android:src="@drawable/ic_launcher"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_gravity="center_vertical" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="12dp"
-        android:paddingTop="4dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/Medium_Text"
-        android:id="@+id/rowText" />
+        android:id="@+id/rowText"
+        android:maxHeight="48dp"
+        android:height="48dp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="16dp"
+        android:fontFamily="Roboto Medium" />
 
 </LinearLayout>

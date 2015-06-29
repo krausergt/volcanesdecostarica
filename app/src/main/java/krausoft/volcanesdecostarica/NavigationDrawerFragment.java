@@ -16,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,8 +72,8 @@ public class NavigationDrawerFragment extends Fragment {
             }
 
             @Override
-            public void onLongClik(View view, int position) {
-                Toast.makeText(getActivity(),"OnLongClick " + position, Toast.LENGTH_LONG).show();
+            public void onLongClick(View view, int position) {
+                //Toast.makeText(getActivity(),"OnLongClick " + position, Toast.LENGTH_LONG).show();
             }
         }));
         return layout;
@@ -85,7 +84,7 @@ public class NavigationDrawerFragment extends Fragment {
         String[] titles = {context.getResources().getString(R.string.turrialba), context.getResources().getString(R.string.poas), context.getResources().getString(R.string.irazu)};
         for (int i = 0; i < titles.length; i++) {
             Information current = new Information();
-            current.iconId = R.drawable.volcano_icon;
+            current.iconId = R.drawable.ic_arrow_right_bold_circle_grey600_36dp;
             current.title = titles[i];
             data.add(current);
         }
@@ -162,7 +161,7 @@ public class NavigationDrawerFragment extends Fragment {
                 public void onLongPress(MotionEvent e) {
                     View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
                     if (child != null && clickListener != null) {
-                        clickListener.onLongClik(child, recyclerView.getChildAdapterPosition(child));
+                        clickListener.onLongClick(child, recyclerView.getChildAdapterPosition(child));
                     }
                 }
             });
@@ -187,6 +186,6 @@ public class NavigationDrawerFragment extends Fragment {
     public static interface ClickListener {
         public void onClick(View view, int position);
 
-        public void onLongClik(View view, int position);
+        public void onLongClick(View view, int position);
     }
 }

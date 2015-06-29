@@ -28,4 +28,6 @@
     <string name="download_error">Downloads are denied</string>
     <string name="out_of_memory_error">Out Of Memory error</string>
     <string name="unknown_error">Unknown error</string>
+    <string name="about_name">Fabián Granados</string>
+    <string name="about_email">granados.fabian@gmail.com</string>
 </resources>
