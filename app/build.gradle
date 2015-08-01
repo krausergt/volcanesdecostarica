@@ -7,8 +7,8 @@ android {
         applicationId "krausoft.volcanesdecostarica"
         minSdkVersion 15
         targetSdkVersion 21
-        versionCode 2
-        versionName "1.01"
+        versionCode 3
+        versionName "1.02"
     }
     buildTypes {
         release {
@@ -18,6 +18,12 @@ android {
     }
     productFlavors {
         Alpha {
+            minSdkVersion 15
+            applicationId 'krausoft.volcanesdecostarica'
+            targetSdkVersion 22
+        }
+
+        Beta {
             minSdkVersion 15
             applicationId 'krausoft.volcanesdecostarica'
             targetSdkVersion 22
