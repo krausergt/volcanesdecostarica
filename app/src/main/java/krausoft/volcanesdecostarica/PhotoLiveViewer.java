@@ -46,7 +46,10 @@ public class PhotoLiveViewer extends ActionBarActivity implements SwipeRefreshLa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        View mDecorView = getWindow().getDecorView();
+        mDecorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         setContentView(R.layout.activity_photo_live_viewer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
 
@@ -178,11 +181,11 @@ public class PhotoLiveViewer extends ActionBarActivity implements SwipeRefreshLa
 
     public void getImageFromInternet() {
         //get the current timeStamp
-        long unixTime = System.currentTimeMillis() / 1000L;
+        //long unixTime = System.currentTimeMillis() / 1000L;
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.handleSlowNetwork(true);
         imageLoader.clearMemoryCache();
-        String url_complete = url + getString(R.string.url_end) + unixTime;
+        String url_complete = url + getString(R.string.url_end);// + unixTime;
         imageLoader.displayImage(url_complete, imageView, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {

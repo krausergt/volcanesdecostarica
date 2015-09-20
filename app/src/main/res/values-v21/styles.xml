@@ -11,6 +11,7 @@
         <item name="icon">@color/icons</item>
         <item name="android:windowBackground">@color/primary_light</item>
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:navigationBarColor">@color/transparent</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>

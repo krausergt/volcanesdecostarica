@@ -181,6 +181,11 @@ public class NavigationDrawerFragment extends Fragment {
         public void onTouchEvent(RecyclerView rv, MotionEvent e) {
 
         }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+        }
     }
 
     public static interface ClickListener {
