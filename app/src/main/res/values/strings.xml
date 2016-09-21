@@ -28,7 +28,7 @@
     <string name="download_error">Downloads are denied</string>
     <string name="out_of_memory_error">Out Of Memory error</string>
     <string name="unknown_error">Unknown error</string>
-    <string name="about_name">Fabián Granados</string>
+    <string name="about_name">Volcanes de Costa Rica</string>
     <string name="about_email">krausoft@gmail.com</string>
     <string name="userTimelineName">OVSICORI_UNA</string>
 </resources>
