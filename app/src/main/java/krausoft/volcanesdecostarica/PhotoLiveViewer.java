@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -26,7 +25,6 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -41,7 +39,7 @@ public class PhotoLiveViewer extends ActionBarActivity implements SwipeRefreshLa
     //we are going to use a handler to be able to run in our TimerTask
     final Handler handler = new Handler();
     private SwipeRefreshLayout mSwipeRefreshLayout;
-
+    String message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,14 +64,13 @@ public class PhotoLiveViewer extends ActionBarActivity implements SwipeRefreshLa
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                 .showImageForEmptyUri(R.drawable.ic_empty) // resource or drawable
                 .showImageOnFail(R.drawable.ic_error) // resource or drawable
-                .cacheOnDisk(false).cacheInMemory(false)
+                .cacheOnDisk(true).cacheInMemory(true)
                 .imageScaleType(ImageScaleType.EXACTLY)
                 .displayer(new FadeInBitmapDisplayer(300)).build();
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
                 getApplicationContext())
                 .defaultDisplayImageOptions(defaultOptions)
-                .memoryCache(new WeakMemoryCache())
                 .diskCacheSize(100 * 1024 * 1024).build();
 
         ImageLoader.getInstance().init(config);
@@ -168,11 +165,12 @@ public class PhotoLiveViewer extends ActionBarActivity implements SwipeRefreshLa
 
         timerTask = new TimerTask() {
             public void run() {
-
                 //use a handler to run a toast that shows the current timestamp
                 handler.post(new Runnable() {
                     public void run() {
-                        getImageFromInternet();
+                        if (!mSwipeRefreshLayout.isRefreshing()) {
+                            getImageFromInternet();
+                        }
                     }
                 });
             }
@@ -184,7 +182,6 @@ public class PhotoLiveViewer extends ActionBarActivity implements SwipeRefreshLa
         //long unixTime = System.currentTimeMillis() / 1000L;
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.handleSlowNetwork(true);
-        imageLoader.clearMemoryCache();
         String url_complete = url + getString(R.string.url_end);// + unixTime;
         imageLoader.displayImage(url_complete, imageView, new ImageLoadingListener() {
             @Override
@@ -194,7 +191,7 @@ public class PhotoLiveViewer extends ActionBarActivity implements SwipeRefreshLa
 
             @Override
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                String message = null;
+                message = null;
                 switch (failReason.getType()) {
                     case IO_ERROR:
                         message = getString(R.string.input_output_error);
@@ -226,7 +223,6 @@ public class PhotoLiveViewer extends ActionBarActivity implements SwipeRefreshLa
             }
             @Override
             public void onLoadingCancelled(String imageUri, View view) {
-
             }
         });
     }
