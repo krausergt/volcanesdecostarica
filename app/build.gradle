@@ -22,8 +22,8 @@ android {
         applicationId "krausoft.volcanesdecostarica"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 6
-        versionName "1.05"
+        versionCode 7
+        versionName "1.06"
     }
 
     productFlavors {
@@ -41,7 +41,7 @@ android {
 
         Stable {
             minSdkVersion 16
-            applicationId 'krausoft.volcanesdecostaricaStable'
+            applicationId 'krausoft.volcanesdecostarica'
             targetSdkVersion 23
         }
     }

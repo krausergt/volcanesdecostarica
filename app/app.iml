@@ -43,12 +43,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/AlphaDebug/jni" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/AlphaDebug/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/AlphaDebug/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/androidTest/Alpha/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/androidTest/Alpha/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/Alpha/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/androidTest/Alpha/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/Alpha/debug" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/androidTest/Alpha/debug" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testAlphaDebug/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testAlphaDebug/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testAlphaDebug/assets" type="java-test-resource" />
@@ -57,6 +51,12 @@
       <sourceFolder url="file://$MODULE_DIR$/src/testAlphaDebug/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testAlphaDebug/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testAlphaDebug/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/androidTest/Alpha/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/androidTest/Alpha/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/Alpha/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/androidTest/Alpha/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/Alpha/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/androidTest/Alpha/debug" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/Alpha/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/Alpha/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/Alpha/assets" type="java-resource" />
@@ -173,8 +173,8 @@
     <orderEntry type="library" exported="" name="gson-2.6.1" level="project" />
     <orderEntry type="library" exported="" name="tweet-composer-2.0.0" level="project" />
     <orderEntry type="library" exported="" name="circleimageview-1.2.1" level="project" />
-    <orderEntry type="library" exported="" name="retrofit-2.0.2" level="project" />
     <orderEntry type="library" exported="" name="universal-image-loader-1.9.3" level="project" />
+    <orderEntry type="library" exported="" name="retrofit-2.0.2" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-23.0.1" level="project" />
     <orderEntry type="library" exported="" name="fabric-1.3.13" level="project" />
     <orderEntry type="library" exported="" name="android-android-23" level="project" />

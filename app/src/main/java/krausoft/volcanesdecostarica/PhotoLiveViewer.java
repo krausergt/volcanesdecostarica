@@ -36,6 +36,7 @@ public class PhotoLiveViewer extends ActionBarActivity implements SwipeRefreshLa
     TimerTask timerTask;
     int option;
     String url;
+    String url_success;
     //we are going to use a handler to be able to run in our TimerTask
     final Handler handler = new Handler();
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -64,7 +65,7 @@ public class PhotoLiveViewer extends ActionBarActivity implements SwipeRefreshLa
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                 .showImageForEmptyUri(R.drawable.ic_empty) // resource or drawable
                 .showImageOnFail(R.drawable.ic_error) // resource or drawable
-                .cacheOnDisk(true).cacheInMemory(true)
+                .cacheOnDisk(false).cacheInMemory(true)
                 .imageScaleType(ImageScaleType.EXACTLY)
                 .displayer(new FadeInBitmapDisplayer(300)).build();
 
@@ -168,9 +169,9 @@ public class PhotoLiveViewer extends ActionBarActivity implements SwipeRefreshLa
                 //use a handler to run a toast that shows the current timestamp
                 handler.post(new Runnable() {
                     public void run() {
-                        if (!mSwipeRefreshLayout.isRefreshing()) {
+
                             getImageFromInternet();
-                        }
+
                     }
                 });
             }
@@ -179,10 +180,10 @@ public class PhotoLiveViewer extends ActionBarActivity implements SwipeRefreshLa
 
     public void getImageFromInternet() {
         //get the current timeStamp
-        //long unixTime = System.currentTimeMillis() / 1000L;
+        long unixTime = System.currentTimeMillis() / 1000L;
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.handleSlowNetwork(true);
-        String url_complete = url + getString(R.string.url_end);// + unixTime;
+        String url_complete = url + getString(R.string.url_end) + unixTime;
         imageLoader.displayImage(url_complete, imageView, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
@@ -192,6 +193,7 @@ public class PhotoLiveViewer extends ActionBarActivity implements SwipeRefreshLa
             @Override
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                 message = null;
+                ImageLoader imageLoader = ImageLoader.getInstance();
                 switch (failReason.getType()) {
                     case IO_ERROR:
                         message = getString(R.string.input_output_error);
@@ -209,6 +211,7 @@ public class PhotoLiveViewer extends ActionBarActivity implements SwipeRefreshLa
                         message = getString(R.string.unknown_error);
                         break;
                 }
+                imageLoader.displayImage(url_success, imageView);
                 Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
                 if (mSwipeRefreshLayout.isRefreshing()){
                     mSwipeRefreshLayout.setRefreshing(false);
@@ -220,6 +223,7 @@ public class PhotoLiveViewer extends ActionBarActivity implements SwipeRefreshLa
                 if (mSwipeRefreshLayout.isRefreshing()){
                     mSwipeRefreshLayout.setRefreshing(false);
                 }
+                url_success = imageUri;
             }
             @Override
             public void onLoadingCancelled(String imageUri, View view) {

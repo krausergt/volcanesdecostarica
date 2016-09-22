@@ -24,7 +24,7 @@
     <string name="irazu_info"><tt>Cámara ubicada en la cima del Irazú con vista hacia el Este, se observa el cráter del Irazú y también se puede observar el Volcán Turrialba.</tt>\n<tt>La imagen se refresca cada 10 segundos.</tt></string>
     <string name="source">Fuente: &lt;a href="http://www.ovsicori.una.ac.cr/" >OVSICORI-UNA&lt;/a></string>
     <string name="decode_error">Problemas al obtener la imagen</string>
-    <string name="input_output_error">Input/Output error</string>
+    <string name="input_output_error">Problemas al establecer conexión</string>
     <string name="download_error">Downloads are denied</string>
     <string name="out_of_memory_error">Out Of Memory error</string>
     <string name="unknown_error">Unknown error</string>
