@@ -169,9 +169,9 @@ public class PhotoLiveViewer extends ActionBarActivity implements SwipeRefreshLa
                 //use a handler to run a toast that shows the current timestamp
                 handler.post(new Runnable() {
                     public void run() {
-
+                        if (!mSwipeRefreshLayout.isRefreshing()) {
                             getImageFromInternet();
-
+                        }
                     }
                 });
             }

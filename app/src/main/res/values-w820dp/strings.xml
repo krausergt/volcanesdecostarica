@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="decode_error">Problemas al obtener la imagen</string>
-<string name="input_output_error">Input/Output error</string>
-<string name="download_error">Downloads are denied</string>
-<string name="out_of_memory_error">Out Of Memory error</string>
-<string name="unknown_error">Unknown error</string>
-    </resources>
+</resources>
