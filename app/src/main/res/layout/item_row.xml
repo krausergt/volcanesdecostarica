@@ -1,33 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
-    android:layout_height="match_parent"
+    android:layout_height="45dp"
     android:background="@drawable/custom_bg"
     android:clickable="true"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp">
 
 
     <ImageView
+        android:id="@+id/rowIcon"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:id="@+id/rowIcon"
-        android:src="@drawable/ic_launcher"
+        android:layout_gravity="center_vertical"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_gravity="center_vertical" />
+        android:contentDescription="@string/c_mara_en_vivo"
+        android:src="@drawable/ic_launcher" />
 
     <TextView
+        android:id="@+id/rowText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/Medium_Text"
-        android:id="@+id/rowText"
-        android:maxHeight="48dp"
-        android:height="48dp"
-        android:gravity="center_vertical"
+        android:layout_gravity="center_vertical"
         android:layout_marginLeft="16dp"
-        android:fontFamily="Roboto Medium" />
+        android:layout_marginStart="16dp"
+        android:height="48dp"
+        android:fontFamily="Roboto Medium"
+        android:gravity="center_vertical"
+        android:maxHeight="48dp"
+        android:text="@string/Medium_Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </LinearLayout>

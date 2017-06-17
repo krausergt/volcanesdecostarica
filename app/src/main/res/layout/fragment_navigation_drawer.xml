@@ -10,8 +10,8 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/tool_bar_top_padding"
-        android:background="@color/primary_dark">
+        android:background="@color/primary_dark"
+        android:paddingTop="@dimen/tool_bar_top_padding">
 
         <include
             android:id="@+id/header"
@@ -29,10 +29,11 @@
 
 
            <android.support.v7.widget.RecyclerView
-               android:layout_below="@+id/container"
                android:id="@+id/drawerList"
                android:layout_width="match_parent"
-               android:layout_height="wrap_content">
+               android:layout_height="wrap_content"
+               android:layout_alignParentBottom="true"
+               android:layout_below="@+id/container">
 
            </android.support.v7.widget.RecyclerView>
        </RelativeLayout>

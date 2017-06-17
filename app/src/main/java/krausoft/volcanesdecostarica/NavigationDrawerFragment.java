@@ -26,16 +26,45 @@ import java.util.List;
  */
 public class NavigationDrawerFragment extends Fragment {
 
-    private RecyclerView recyclerView;
     public static final String PREF_FILE_NAME = "testpref";
     public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
     public final static String OPTION_SELECTED = "position";
+    private RecyclerView recyclerView;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private MenuAdapter adapter;
     private boolean mUserLearnedDrawer;
     private boolean mFromSavedInstanceState;
     private View containerView;
+
+    public NavigationDrawerFragment() {
+        // Required empty public constructor
+    }
+
+    public static List<Information> getData(Context context) {
+        List<Information> data = new ArrayList<>();
+        String[] titles = {context.getResources().getString(R.string.turrialba), context.getResources().getString(R.string.irazu),
+                context.getResources().getString(R.string.poas), context.getResources().getString(R.string.poas2)};
+        for (String title : titles) {
+            Information current = new Information();
+            current.iconId = R.drawable.ic_arrow_right_bold_circle_grey600_36dp;
+            current.title = title;
+            data.add(current);
+        }
+        return data;
+    }
+
+    public static void saveToPreferences(Context context, String preferenceName, String preferenceValue) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(preferenceName, preferenceValue);
+        editor.apply();
+    }
+
+    public static String readToPreferences(Context context, String preferenceName, String preferenceValue) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(preferenceName, preferenceValue);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,17 +75,12 @@ public class NavigationDrawerFragment extends Fragment {
         }
     }
 
-    public NavigationDrawerFragment() {
-        // Required empty public constructor
-    }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
-        recyclerView = (RecyclerView) layout.findViewById(R.id.drawerList);
+        recyclerView = layout.findViewById(R.id.drawerList);
         adapter = new MenuAdapter(getActivity(), getData(getActivity()));
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -78,19 +102,6 @@ public class NavigationDrawerFragment extends Fragment {
         }));
         return layout;
     }
-
-    public static List<Information> getData(Context context) {
-        List<Information> data = new ArrayList<>();
-        String[] titles = {context.getResources().getString(R.string.turrialba), context.getResources().getString(R.string.poas), context.getResources().getString(R.string.irazu)};
-        for (int i = 0; i < titles.length; i++) {
-            Information current = new Information();
-            current.iconId = R.drawable.ic_arrow_right_bold_circle_grey600_36dp;
-            current.title = titles[i];
-            data.add(current);
-        }
-        return data;
-    }
-
 
     public void setUp(int fragmentId, DrawerLayout drawerLayout, final Toolbar toolbar) {
         containerView = getActivity().findViewById(fragmentId);
@@ -123,7 +134,7 @@ public class NavigationDrawerFragment extends Fragment {
         if (!mUserLearnedDrawer && !mFromSavedInstanceState) {
             mDrawerLayout.openDrawer(containerView);
         }
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -132,24 +143,18 @@ public class NavigationDrawerFragment extends Fragment {
         });
     }
 
-    public static void saveToPreferences(Context context, String preferenceName, String preferenceValue) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(preferenceName, preferenceValue);
-        editor.apply();
+    interface ClickListener {
+        void onClick(View view, int position);
+
+        void onLongClick(View view, int position);
     }
 
-    public static String readToPreferences(Context context, String preferenceName, String preferenceValue) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(preferenceName, preferenceValue);
-    }
-
-    class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
+    private class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 
         private GestureDetector gestureDetector;
         private ClickListener clickListener;
 
-        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final ClickListener clickListener) {
+        RecyclerTouchListener(Context context, final RecyclerView recyclerView, final ClickListener clickListener) {
             this.clickListener = clickListener;
             gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
                 @Override
@@ -186,11 +191,5 @@ public class NavigationDrawerFragment extends Fragment {
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
         }
-    }
-
-    public static interface ClickListener {
-        public void onClick(View view, int position);
-
-        public void onLongClick(View view, int position);
     }
 }

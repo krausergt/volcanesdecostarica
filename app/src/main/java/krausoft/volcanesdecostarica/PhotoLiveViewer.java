@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -30,17 +30,17 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class PhotoLiveViewer extends ActionBarActivity implements SwipeRefreshLayout.OnRefreshListener {
-    private ImageView imageView;
+public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+    //we are going to use a handler to be able to run in our TimerTask
+    final Handler handler = new Handler();
     Timer timer;
     TimerTask timerTask;
     int option;
     String url;
     String url_success;
-    //we are going to use a handler to be able to run in our TimerTask
-    final Handler handler = new Handler();
-    private SwipeRefreshLayout mSwipeRefreshLayout;
     String message;
+    private ImageView imageView;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +55,10 @@ public class PhotoLiveViewer extends ActionBarActivity implements SwipeRefreshLa
         if (!toolbar.isInEditMode())
             setSupportActionBar(toolbar);
 
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         // Get the message from the intent
         Intent intent = getIntent();
 
@@ -87,17 +89,22 @@ public class PhotoLiveViewer extends ActionBarActivity implements SwipeRefreshLa
                 textView.setText(getString(R.string.turrialba_info));
                 break;
             case 1:
-                url = url + getString(R.string.poas_feed);
-                textView.setText(getString(R.string.poas_info));
-                break;
-            case 2:
                 url = url + getString(R.string.irazu_feed);
                 textView.setText(getString(R.string.irazu_info));
                 break;
-            default:
-                url = url + getString(R.string.turrialba_feed);
-                textView.setText(getString(R.string.turrialba_info));
+            case 2:
+                url = url + getString(R.string.poas_feed);
+                textView.setText(getString(R.string.poas_info));
                 break;
+            case 3:
+                url = url + getString(R.string.poas_feed2);
+                textView.setText(getString(R.string.craterpoas_info));
+                break;
+            default:
+                url = url + getString(R.string.poas_feed2);
+                textView.setText(getString(R.string.craterpoas_info));
+                break;
+
         }
 
         TextView textViewSource = (TextView) findViewById(R.id.volcan_source);
@@ -169,9 +176,9 @@ public class PhotoLiveViewer extends ActionBarActivity implements SwipeRefreshLa
                 //use a handler to run a toast that shows the current timestamp
                 handler.post(new Runnable() {
                     public void run() {
-                        if (!mSwipeRefreshLayout.isRefreshing()) {
-                            getImageFromInternet();
-                        }
+                        ImageLoader imageLoader = ImageLoader.getInstance();
+                        imageLoader.cancelDisplayTask(imageView);
+                        getImageFromInternet();
                     }
                 });
             }
@@ -213,20 +220,24 @@ public class PhotoLiveViewer extends ActionBarActivity implements SwipeRefreshLa
                 }
                 imageLoader.displayImage(url_success, imageView);
                 Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
-                if (mSwipeRefreshLayout.isRefreshing()){
+                if (mSwipeRefreshLayout.isRefreshing()) {
                     mSwipeRefreshLayout.setRefreshing(false);
                 }
             }
 
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                if (mSwipeRefreshLayout.isRefreshing()){
+                if (mSwipeRefreshLayout.isRefreshing()) {
                     mSwipeRefreshLayout.setRefreshing(false);
                 }
                 url_success = imageUri;
             }
+
             @Override
             public void onLoadingCancelled(String imageUri, View view) {
+                if (mSwipeRefreshLayout.isRefreshing()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
     }
