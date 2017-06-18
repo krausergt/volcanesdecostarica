@@ -31,11 +31,12 @@
     <string name="about_email">krausoft@gmail.com</string>
     <string name="userTimelineName">OVSICORI_UNA</string>
     <string name="c_mara_en_vivo">Cámara en vivo</string>
-    <string name="cache_path">/data/data/krausoft.volcanesdecostarica/cache/share.jpeg</string>
+    <string name="cache_path">/data/data/krausoft.volcanesdecostarica/cache/</string>
     <string name="Mensaje1">Volcán Turrialba</string>
     <string name="Mensaje2">Volcán Turrialba Cam 2</string>
     <string name="Mensaje3">Volcán Póas</string>
     <string name="Mensaje4">Volcán Póas(Crater)</string>
     <string name="compartir">Compartir</string>
     <string name="dateFormat">dd-MM-yyyy, HH:mm:ss</string>
+    <string name="fileNameExt">_share.jpeg</string>
 </resources>

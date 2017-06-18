@@ -282,7 +282,9 @@ public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLa
                         /* save the image - I'm gonna use JPEG */
                 final Bitmap.CompressFormat mFormat = Bitmap.CompressFormat.JPEG;
                         /* don't forget to include the extension into the file name */
-                final File myImageFile = new File(getString(R.string.cache_path));
+                long unixTime = System.currentTimeMillis() / 1000L;
+                String fileName = unixTime + getString(R.string.fileNameExt);
+                final File myImageFile = new File(getString(R.string.cache_path) + fileName);
                 if (myImageFile.exists()) {
                     myImageFile.delete();
                 }

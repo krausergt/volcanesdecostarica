@@ -22,8 +22,8 @@ android {
         applicationId "krausoft.volcanesdecostarica"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 9
-        versionName "1.08"
+        versionCode 11
+        versionName "1.10"
     }
 
     productFlavors {

@@ -42,13 +42,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/AlphaDebug/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/AlphaDebug/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/AlphaDebug/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testAlphaDebug/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testAlphaDebug/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testAlphaDebug/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testAlphaDebug/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testAlphaDebug/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testAlphaDebug/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testAlphaDebug/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/androidTest/Alpha/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/androidTest/Alpha/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/Alpha/debug" isTestSource="true" generated="true" />
@@ -56,6 +49,13 @@
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/apt/androidTest/Alpha/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/Alpha/debug" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/androidTest/Alpha/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testAlphaDebug/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testAlphaDebug/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testAlphaDebug/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testAlphaDebug/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testAlphaDebug/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testAlphaDebug/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testAlphaDebug/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/Alpha/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/Alpha/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/Alpha/assets" type="java-resource" />
