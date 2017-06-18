@@ -81,7 +81,7 @@ public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLa
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                 .showImageForEmptyUri(R.drawable.ic_empty) // resource or drawable
                 .showImageOnFail(R.drawable.ic_error) // resource or drawable
-                .cacheOnDisk(true).cacheInMemory(true)
+                .cacheOnDisk(false).cacheInMemory(true)
                 .imageScaleType(ImageScaleType.EXACTLY)
                 .displayer(new FadeInBitmapDisplayer(300)).build();
 
