@@ -2,14 +2,18 @@ package krausoft.volcanesdecostarica;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.FileProvider;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,11 +30,21 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import krausoft.volcanesdecostarica.Tools.BasicImageDownloader;
+import krausoft.volcanesdecostarica.Tools.BasicImageDownloader.ImageError;
+import krausoft.volcanesdecostarica.Tools.BasicImageDownloader.OnImageLoaderListener;
+
 
 public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+    private static final String AUTHORITY = "krausoft.volcanesdecostarica.fileprovider";
     //we are going to use a handler to be able to run in our TimerTask
     final Handler handler = new Handler();
     Timer timer;
@@ -67,14 +81,14 @@ public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLa
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                 .showImageForEmptyUri(R.drawable.ic_empty) // resource or drawable
                 .showImageOnFail(R.drawable.ic_error) // resource or drawable
-                .cacheOnDisk(false).cacheInMemory(true)
+                .cacheOnDisk(true).cacheInMemory(true)
                 .imageScaleType(ImageScaleType.EXACTLY)
                 .displayer(new FadeInBitmapDisplayer(300)).build();
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
                 getApplicationContext())
                 .defaultDisplayImageOptions(defaultOptions)
-                .diskCacheSize(100 * 1024 * 1024).build();
+                .build();
 
         ImageLoader.getInstance().init(config);
         // END - UNIVERSAL IMAGE LOADER SETUP
@@ -112,8 +126,16 @@ public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLa
         textViewSource.setClickable(true);
         textViewSource.setMovementMethod(LinkMovementMethod.getInstance());
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-    }
 
+        FloatingActionButton fabShare = (FloatingActionButton) findViewById(R.id.fabShare);
+        fabShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sharePicture();
+            }
+        });
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -176,8 +198,8 @@ public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLa
                 //use a handler to run a toast that shows the current timestamp
                 handler.post(new Runnable() {
                     public void run() {
-                        ImageLoader imageLoader = ImageLoader.getInstance();
-                        imageLoader.cancelDisplayTask(imageView);
+                        //ImageLoader imageLoader = ImageLoader.getInstance();
+                        //imageLoader.cancelDisplayTask(imageView);
                         getImageFromInternet();
                     }
                 });
@@ -188,7 +210,7 @@ public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLa
     public void getImageFromInternet() {
         //get the current timeStamp
         long unixTime = System.currentTimeMillis() / 1000L;
-        ImageLoader imageLoader = ImageLoader.getInstance();
+        final ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.handleSlowNetwork(true);
         String url_complete = url + getString(R.string.url_end) + unixTime;
         imageLoader.displayImage(url_complete, imageView, new ImageLoadingListener() {
@@ -242,9 +264,85 @@ public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLa
         });
     }
 
+    private void sharePicture() {
+        final ImageLoader imageLoader = ImageLoader.getInstance();
+
+        final BasicImageDownloader downloader = new BasicImageDownloader(new OnImageLoaderListener() {
+            @Override
+            public void onError(ImageError error) {
+                error.printStackTrace();
+            }
+
+            @Override
+            public void onProgressChange(int percent) {
+            }
+
+            @Override
+            public void onComplete(Bitmap result) {
+                        /* save the image - I'm gonna use JPEG */
+                final Bitmap.CompressFormat mFormat = Bitmap.CompressFormat.JPEG;
+                        /* don't forget to include the extension into the file name */
+                final File myImageFile = new File(getString(R.string.cache_path));
+                if (myImageFile.exists()) {
+                    myImageFile.delete();
+                }
+                BasicImageDownloader.writeToDisk(myImageFile, result, new BasicImageDownloader.OnBitmapSaveListener() {
+                    @Override
+                    public void onBitmapSaved() {
+                        Log.e("onBitmapSaved", "Image saved as: " + myImageFile.getAbsolutePath());
+                    }
+
+                    @Override
+                    public void onBitmapSaveError(ImageError error) {
+                        Log.e("onBitmapSaveError", "Error code " + error.getErrorCode() + ": " +
+                                error.getMessage());
+                        error.printStackTrace();
+                    }
+                }, mFormat, false);
+
+                try {
+
+                    Intent intent = getIntent();
+                    DateFormat df = new SimpleDateFormat(getString(R.string.dateFormat), Locale.getDefault());
+                    String date = df.format(Calendar.getInstance().getTime());
+                    String mensaje = date;
+                    switch (option) {
+                        case 0:
+                            mensaje = getString(R.string.Mensaje1) +
+                                    " [" + date + "]";
+                            break;
+                        case 1:
+                            mensaje = getString(R.string.Mensaje2) +
+                                    " [" + date + "]";
+                            break;
+                        case 2:
+                            mensaje = getString(R.string.Mensaje3) +
+                                    " [" + date + "]";
+                            break;
+                        case 3:
+                            mensaje = getString(R.string.Mensaje4) +
+                                    " [" + date + "]";
+                            break;
+                    }
+                    option = intent.getIntExtra(NavigationDrawerFragment.OPTION_SELECTED, 0);
+                    Uri uriToImage = FileProvider.getUriForFile(getBaseContext(), AUTHORITY, myImageFile);
+                    Intent share = new Intent(Intent.ACTION_SEND);
+                    share.setType("image/*");
+                    share.putExtra(Intent.EXTRA_STREAM, uriToImage);
+                    share.putExtra(Intent.EXTRA_TEXT, mensaje);
+                    startActivity(Intent.createChooser(share, getString(R.string.compartir)));
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        downloader.download(url_success, false);
+    }
+
     @Override
     public void onRefresh() {
         stopTimerTask(findViewById(R.id.imageView));
         startTimer();
     }
+
 }

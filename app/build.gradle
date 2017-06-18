@@ -22,7 +22,7 @@ android {
         applicationId "krausoft.volcanesdecostarica"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 8
+        versionCode 9
         versionName "1.08"
     }
 
@@ -55,4 +55,5 @@ dependencies {
     compile('com.twitter.sdk.android:twitter:2.0.0@aar') {
         transitive = true;
     }
+    compile 'com.android.support:design:26.0.0-alpha1'
 }
