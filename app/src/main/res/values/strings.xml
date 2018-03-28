@@ -39,4 +39,6 @@
     <string name="compartir">Compartir</string>
     <string name="dateFormat">dd-MM-yyyy, HH:mm:ss</string>
     <string name="fileNameExt">_share.jpeg</string>
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">XNEhjo4kzxqZ4fxWDZtCI5x88</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">GQtN70UeliacS62weeElTSTbvs0zMSm5GYakbgvFUuLAyZvS9L</string>
 </resources>
