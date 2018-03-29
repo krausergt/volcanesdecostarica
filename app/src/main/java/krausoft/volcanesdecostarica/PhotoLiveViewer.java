@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,10 +36,6 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import krausoft.volcanesdecostarica.Tools.BasicImageDownloader;
-import krausoft.volcanesdecostarica.Tools.BasicImageDownloader.ImageError;
-import krausoft.volcanesdecostarica.Tools.BasicImageDownloader.OnImageLoaderListener;
 
 
 public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
@@ -81,7 +76,7 @@ public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLa
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                 .showImageForEmptyUri(R.drawable.ic_empty) // resource or drawable
                 .showImageOnFail(R.drawable.ic_error) // resource or drawable
-                .cacheOnDisk(false).cacheInMemory(true)
+                .cacheOnDisk(true).cacheInMemory(false)
                 .imageScaleType(ImageScaleType.EXACTLY)
                 .displayer(new FadeInBitmapDisplayer(300)).build();
 
@@ -91,6 +86,7 @@ public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLa
                 .build();
 
         ImageLoader.getInstance().init(config);
+        ImageLoader.getInstance().clearDiskCache();
         // END - UNIVERSAL IMAGE LOADER SETUP
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeImage);
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -266,8 +262,42 @@ public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLa
 
     private void sharePicture() {
         final ImageLoader imageLoader = ImageLoader.getInstance();
+        File file = imageLoader.getDiskCache().get(url_success);
+        try {
 
-        final BasicImageDownloader downloader = new BasicImageDownloader(new OnImageLoaderListener() {
+            Intent intent = getIntent();
+            DateFormat df = new SimpleDateFormat(getString(R.string.dateFormat), Locale.getDefault());
+            String date = df.format(Calendar.getInstance().getTime());
+            String mensaje = date;
+            switch (option) {
+                case 0:
+                    mensaje = getString(R.string.Mensaje1) +
+                            " [" + date + "]";
+                    break;
+                case 1:
+                    mensaje = getString(R.string.Mensaje2) +
+                            " [" + date + "]";
+                    break;
+                case 2:
+                    mensaje = getString(R.string.Mensaje3) +
+                            " [" + date + "]";
+                    break;
+                case 3:
+                    mensaje = getString(R.string.Mensaje4) +
+                            " [" + date + "]";
+                    break;
+            }
+            option = intent.getIntExtra(NavigationDrawerFragment.OPTION_SELECTED, 0);
+            Uri uriToImage = FileProvider.getUriForFile(getBaseContext(), AUTHORITY, file);
+            Intent share = new Intent(Intent.ACTION_SEND);
+            share.setType("image/*");
+            share.putExtra(Intent.EXTRA_STREAM, uriToImage);
+            share.putExtra(Intent.EXTRA_TEXT, mensaje);
+            startActivity(Intent.createChooser(share, getString(R.string.compartir)));
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+        /*final BasicImageDownloader downloader = new BasicImageDownloader(new OnImageLoaderListener() {
             @Override
             public void onError(ImageError error) {
                 error.printStackTrace();
@@ -279,9 +309,9 @@ public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLa
 
             @Override
             public void onComplete(Bitmap result) {
-                        /* save the image - I'm gonna use JPEG */
+                        *//* save the image - I'm gonna use JPEG *//*
                 final Bitmap.CompressFormat mFormat = Bitmap.CompressFormat.JPEG;
-                        /* don't forget to include the extension into the file name */
+                        *//* don't forget to include the extension into the file name *//*
                 long unixTime = System.currentTimeMillis() / 1000L;
                 String fileName = unixTime + getString(R.string.fileNameExt);
                 final File myImageFile = new File(getString(R.string.cache_path) + fileName);
@@ -338,7 +368,7 @@ public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLa
                 }
             }
         });
-        downloader.download(url_success, false);
+        downloader.download(url_success, false);*/
     }
 
     @Override
