@@ -2,5 +2,8 @@
 <paths>
     <cache-path
         name="Cache"
-        path="" />
+        path="." />
+    <external-cache-path
+        name="CacheExt"
+        path="." />
 </paths>

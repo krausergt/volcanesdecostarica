@@ -148,6 +148,5 @@
     <orderEntry type="library" name="Gradle: com.twitter.sdk.android:tweet-composer-3.2.0" level="project" />
     <orderEntry type="library" name="Gradle: com.oguzdev:CircularFloatingActionMenu-1.0.2" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.lifecycle:runtime-1.0.0" level="project" />
-    <orderEntry type="library" name="Gradle: android-android-26" level="project" />
   </component>
 </module>
