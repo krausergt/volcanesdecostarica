@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -28,6 +29,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.utils.StorageUtils;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -36,6 +38,8 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import krausoft.volcanesdecostarica.Tools.HashCodeFileNameWithDummyExtGenerator;
 
 
 public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
@@ -70,7 +74,7 @@ public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLa
         }
         // Get the message from the intent
         Intent intent = getIntent();
-
+        File cacheDir = StorageUtils.getCacheDirectory(this);
         option = intent.getIntExtra(NavigationDrawerFragment.OPTION_SELECTED, 0);
         // UNIVERSAL IMAGE LOADER SETUP
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
@@ -82,6 +86,7 @@ public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLa
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
                 getApplicationContext())
+                .diskCache(new UnlimitedDiscCache(cacheDir, null, new HashCodeFileNameWithDummyExtGenerator()))
                 .defaultDisplayImageOptions(defaultOptions)
                 .build();
 
@@ -109,6 +114,14 @@ public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLa
             case 3:
                 url = url + getString(R.string.poas_feed2);
                 textView.setText(getString(R.string.craterpoas_info));
+                break;
+            case 4:
+                url = url + getString(R.string.rvieja_feed);
+                textView.setText(getString(R.string.rvieja_info));
+                break;
+            case 5:
+                url = url + getString(R.string.rvieja2_feed);
+                textView.setText(getString(R.string.rvieja2_info));
                 break;
             default:
                 url = url + getString(R.string.poas_feed2);
@@ -165,12 +178,34 @@ public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLa
     public void startTimer() {
         //set a new Timer
         timer = new Timer();
-
+        long period;
+        switch (option) {
+            case 0:
+                period = Long.parseLong(getString(R.string.Timer10seg));
+                break;
+            case 1:
+                period = Long.parseLong(getString(R.string.Timer60seg));
+                break;
+            case 2:
+                period = Long.parseLong(getString(R.string.Timer60seg));
+                break;
+            case 3:
+                period = Long.parseLong(getString(R.string.Timer60seg));
+                break;
+            case 4:
+                period = Long.parseLong(getString(R.string.Timer60seg));
+                break;
+            case 5:
+                period = Long.parseLong(getString(R.string.Timer5min));
+                break;
+            default:
+                period = Long.parseLong(getString(R.string.Timer10seg));
+                break;
+        }
         //initialize the TimerTask's job
         initializeTimerTask();
-
         //schedule the timer, after the first 5000ms the TimerTask will run every 10000ms
-        timer.schedule(timerTask, 0, 10000); //
+        timer.schedule(timerTask, 0, period); //
     }
 
     @Override
@@ -286,6 +321,14 @@ public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLa
                     mensaje = getString(R.string.Mensaje4) +
                             " [" + date + "]";
                     break;
+                case 4:
+                    mensaje = getString(R.string.Mensaje5) +
+                            " [" + date + "]";
+                    break;
+                case 5:
+                    mensaje = getString(R.string.Mensaje6) +
+                            " [" + date + "]";
+                    break;
             }
             option = intent.getIntExtra(NavigationDrawerFragment.OPTION_SELECTED, 0);
             Uri uriToImage = FileProvider.getUriForFile(getBaseContext(), AUTHORITY, file);
@@ -378,3 +421,5 @@ public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLa
     }
 
 }
+
+

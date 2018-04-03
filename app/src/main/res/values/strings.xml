@@ -9,6 +9,8 @@
     <string name="poas">Poás</string>
     <string name="poas2">Crater Poás</string>
     <string name="irazu">Turrialba Cam 2</string>
+    <string name="rvieja">R. de la Vieja</string>
+    <string name="rvieja2">R. Vieja Cam Upala</string>
     <string name="title_activity_photo_live_viewer">Cámara en Vivo</string>
     <string name="image_description">Imagen del volcán</string>
     <string name="url_main">http://www.ovsprivado.una.ac.cr/images/stories/live</string>
@@ -16,11 +18,15 @@
     <string name="poas_feed">poas</string>
     <string name="poas_feed2">craterpoas</string>
     <string name="irazu_feed">irazu</string>
+    <string name="rvieja_feed">rincon</string>
+    <string name="rvieja2_feed">rincon2</string>
     <string name="url_end">/camara.jpg?</string>
     <string name="turrialba_info"><tt>Cámara ubicada en el cráter del volcán Turrialba, a unos 600 metros al Este del cráter activo (mirando hacia el oeste).</tt>\n<tt>La imagen se refresca cada 10 segundos.</tt></string>
     <string name="poas_info"><tt>Cámara ubicada 1.8 km al SurOeste del cráter del Volcán Póas.</tt>\n<tt>La imagen se refresca cada 60 segundos.</tt></string>
     <string name="craterpoas_info"><tt>Cámara ubicada en el cráter del Volcán Póas.</tt>\n<tt>La imagen se refresca cada 60 segundos.</tt></string>
-    <string name="irazu_info"><tt>Cámara ubicada en la cima del Irazú con vista hacia el Este, se observa el cráter del Irazú y también se puede observar el Volcán Turrialba.</tt>\n<tt>La imagen se refresca cada 10 segundos.</tt></string>
+    <string name="irazu_info"><tt>Cámara ubicada en la cima del Irazú con vista hacia el Este, se observa el cráter del Irazú y también se puede observar el Volcán Turrialba.</tt>\n<tt>La imagen se refresca cada 60 segundos.</tt></string>
+    <string name="rvieja_info"><tt>Esta cámara está en fase de prueba para determinar sus capacidades y limitaciones para propósitos de vigilancia volcánica. Bajo condiciones de buen tiempo con días despejados la cámara CCFC ha estado proveyendo las imágenes webcam más cercanas hasta ahora nunca antes logradas para este volcán.</tt>\n<tt>La imagen se refresca cada 60 segundos.</tt></string>
+    <string name="rvieja2_info"><tt>Cámara ubicada en Buenos Aires de Upala de Alajuela.</tt>\n<tt>La imagen se refresca cada 5 min</tt></string>
     <string name="source">Fuente: &lt;a href="http://www.ovsicori.una.ac.cr/" >OVSICORI-UNA&lt;/a></string>
     <string name="decode_error">Problemas al obtener la imagen</string>
     <string name="input_output_error">Problemas al establecer conexión</string>
@@ -36,6 +42,11 @@
     <string name="Mensaje2">Volcán Turrialba Cam 2</string>
     <string name="Mensaje3">Volcán Póas</string>
     <string name="Mensaje4">Volcán Póas(Crater)</string>
+    <string name="Mensaje5">Volcán Rincón de la Vieja - Sensoria</string>
+    <string name="Mensaje6">Volcán Rincón de la Vieja - Upala</string>
+    <string name="Timer10seg">10000</string>
+    <string name="Timer60seg">60000</string>
+    <string name="Timer5min">300000</string>
     <string name="compartir">Compartir</string>
     <string name="dateFormat">dd-MM-yyyy, HH:mm:ss</string>
     <string name="fileNameExt">_share.jpeg</string>

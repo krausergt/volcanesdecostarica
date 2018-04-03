@@ -44,7 +44,8 @@ public class NavigationDrawerFragment extends Fragment {
     public static List<Information> getData(Context context) {
         List<Information> data = new ArrayList<>();
         String[] titles = {context.getResources().getString(R.string.turrialba), context.getResources().getString(R.string.irazu),
-                context.getResources().getString(R.string.poas), context.getResources().getString(R.string.poas2)};
+                context.getResources().getString(R.string.poas), context.getResources().getString(R.string.poas2),
+                context.getResources().getString(R.string.rvieja), context.getResources().getString(R.string.rvieja2)};
         for (String title : titles) {
             Information current = new Information();
             current.iconId = R.drawable.ic_arrow_right_bold_circle_grey600_36dp;
