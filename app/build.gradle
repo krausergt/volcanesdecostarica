@@ -23,8 +23,8 @@ android {
         applicationId "krausoft.volcanesdecostarica"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 16
-        versionName "2.11"
+        versionCode 17
+        versionName "2.12"
     }
 
     // Keep the following configuration in order to target Java 8.

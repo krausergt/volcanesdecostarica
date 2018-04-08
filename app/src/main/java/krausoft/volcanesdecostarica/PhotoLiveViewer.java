@@ -140,7 +140,11 @@ public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLa
         fabShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sharePicture();
+                if (url_success != null) {
+                    sharePicture();
+                } else {
+                    Toast.makeText(mDecorView.getContext(), message, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -254,6 +258,7 @@ public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLa
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                 message = null;
                 ImageLoader imageLoader = ImageLoader.getInstance();
+
                 switch (failReason.getType()) {
                     case IO_ERROR:
                         message = getString(R.string.input_output_error);
@@ -297,9 +302,9 @@ public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLa
 
     private void sharePicture() {
         final ImageLoader imageLoader = ImageLoader.getInstance();
-        File file = imageLoader.getDiskCache().get(url_success);
+        File file;
         try {
-
+            file = imageLoader.getDiskCache().get(url_success);
             Intent intent = getIntent();
             DateFormat df = new SimpleDateFormat(getString(R.string.dateFormat), Locale.getDefault());
             String date = df.format(Calendar.getInstance().getTime());
