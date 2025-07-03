@@ -1,28 +1,29 @@
 buildscript {
     repositories {
-        maven { url 'https://maven.fabric.io/public' }
+        google() // Fabric está ahora en Google Maven
+        mavenCentral()
     }
 
     dependencies {
-        // The Fabric Gradle plugin uses an open ended version to react
-        // quickly to Android tooling updates
-        classpath 'io.fabric.tools:gradle:1.22.2'
+        // Actualizar a Firebase Crashlytics, ya que Fabric está obsoleto
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:3.0.2'
     }
 }
 apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
+apply plugin: 'com.google.firebase.crashlytics' // Aplicar el plugin de Firebase Crashlytics
 
 repositories {
     google()
+    mavenCentral() // Asegurarse de que mavenCentral esté aquí también
 }
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 34 // Actualizado a la última API estable
+    buildToolsVersion '34.0.0' // Actualizado a la última versión estable
     defaultConfig {
         applicationId "krausoft.volcanesdecostarica"
-        minSdkVersion 16
-        targetSdkVersion 26
+        minSdkVersion 21 // Se recomienda aumentar minSdkVersion para compatibilidad con bibliotecas modernas
+        targetSdkVersion 34 // Actualizado a la última API estable
         versionCode 17
         versionName "2.12"
     }
@@ -32,17 +33,23 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    namespace "krausoft.volcanesdecostarica" // Necesario para AGP 8.0+
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
-    implementation 'de.hdodenhof:circleimageview:2.2.0'
-    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
-    implementation 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
-    implementation 'com.android.support:design:26.1.0'
-    implementation ('com.twitter.sdk.android:twitter:3.2.0@aar') {
-        transitive = true
-    }
+    // Migrar a AndroidX
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+    implementation 'de.hdodenhof:circleimageview:3.1.0' // Actualizar a la última versión
+    // implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5' // Eliminada, se reemplaza por Glide
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
+    // implementation 'com.oguzdev:CircularFloatingActionMenu:1.0.2' // Eliminada por no usarse y estar obsoleta
+    implementation 'com.google.android.material:material:1.12.0' // Reemplazo de com.android.support:design
+    // Twitter SDK obsoleto eliminado, se reemplazará con Twitter4J
+    implementation 'org.twitter4j:twitter4j-core:4.1.2'
+    // Añadir Firebase BOM y Crashlytics SDK
+    implementation platform('com.google.firebase:firebase-bom:33.1.2')
+    implementation 'com.google.firebase:firebase-crashlytics'
 }

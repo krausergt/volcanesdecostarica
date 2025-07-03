@@ -33,12 +33,13 @@
                 android:value="krausoft.volcanesdecostarica.MainActivity" />
         </activity>
 
-        <meta-data
+        <!-- Fabric API Key eliminada, ya no es necesaria con Firebase Crashlytics -->
+        <!-- <meta-data
             android:name="io.fabric.ApiKey"
             android:value="4afca90dfb2c77fb54de31e2c901ea4fe9522159"
-            />
+            /> -->
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="krausoft.volcanesdecostarica.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">

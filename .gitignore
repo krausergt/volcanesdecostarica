@@ -1,6 +1,12 @@
 .gradle
 /local.properties
+app/local.properties
 /.idea/workspace.xml
 /.idea/libraries
 .DS_Store
 /build
+app/src/main/res/values/secrets.xml
+app/google-services.json
+*.iml
+.externalNativeBuild
+/captures

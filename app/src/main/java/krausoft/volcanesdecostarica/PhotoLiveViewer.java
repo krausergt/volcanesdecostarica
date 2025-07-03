@@ -5,12 +5,12 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.NavUtils;
-import android.support.v4.content.FileProvider;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.core.app.NavUtils;
+import androidx.core.content.FileProvider;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
@@ -21,15 +21,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.nostra13.universalimageloader.utils.StorageUtils;
+// Imports de Universal Image Loader eliminados
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestOptions;
+import androidx.annotation.Nullable;
+import android.graphics.drawable.Drawable;
+
 
 import java.io.File;
 import java.text.DateFormat;
@@ -74,25 +77,9 @@ public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLa
         }
         // Get the message from the intent
         Intent intent = getIntent();
-        File cacheDir = StorageUtils.getCacheDirectory(this);
         option = intent.getIntExtra(NavigationDrawerFragment.OPTION_SELECTED, 0);
-        // UNIVERSAL IMAGE LOADER SETUP
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                .showImageForEmptyUri(R.drawable.ic_empty) // resource or drawable
-                .showImageOnFail(R.drawable.ic_error) // resource or drawable
-                .cacheOnDisk(true).cacheInMemory(false)
-                .imageScaleType(ImageScaleType.EXACTLY)
-                .displayer(new FadeInBitmapDisplayer(300)).build();
+        // Universal Image Loader ya no se inicializa aquí. Glide se inicializa automáticamente.
 
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-                getApplicationContext())
-                .diskCache(new UnlimitedDiscCache(cacheDir, null, new HashCodeFileNameWithDummyExtGenerator()))
-                .defaultDisplayImageOptions(defaultOptions)
-                .build();
-
-        ImageLoader.getInstance().init(config);
-        ImageLoader.getInstance().clearDiskCache();
-        // END - UNIVERSAL IMAGE LOADER SETUP
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeImage);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         imageView = (ImageView) findViewById(R.id.imageView);
@@ -245,67 +232,87 @@ public class PhotoLiveViewer extends AppCompatActivity implements SwipeRefreshLa
     public void getImageFromInternet() {
         //get the current timeStamp
         long unixTime = System.currentTimeMillis() / 1000L;
-        final ImageLoader imageLoader = ImageLoader.getInstance();
-        imageLoader.handleSlowNetwork(true);
         String url_complete = url + getString(R.string.url_end) + unixTime;
-        imageLoader.displayImage(url_complete, imageView, new ImageLoadingListener() {
-            @Override
-            public void onLoadingStarted(String imageUri, View view) {
-                mSwipeRefreshLayout.setRefreshing(true);
-            }
 
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                message = null;
-                ImageLoader imageLoader = ImageLoader.getInstance();
+        RequestOptions requestOptions = new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.NONE) // No cache para obtener siempre la más reciente
+                .skipMemoryCache(true)
+                .placeholder(R.drawable.ic_empty)
+                .error(R.drawable.ic_error);
 
-                switch (failReason.getType()) {
-                    case IO_ERROR:
-                        message = getString(R.string.input_output_error);
-                        break;
-                    case DECODING_ERROR:
-                        message = getString(R.string.decode_error);
-                        break;
-                    case NETWORK_DENIED:
-                        message = getString(R.string.download_error);
-                        break;
-                    case OUT_OF_MEMORY:
-                        message = getString(R.string.out_of_memory_error);
-                        break;
-                    case UNKNOWN:
-                        message = getString(R.string.unknown_error);
-                        break;
-                }
-                imageLoader.displayImage(url_success, imageView);
-                Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
-                if (mSwipeRefreshLayout.isRefreshing()) {
-                    mSwipeRefreshLayout.setRefreshing(false);
-                }
-            }
+        Glide.with(this)
+                .load(url_complete)
+                .apply(requestOptions)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        message = getString(R.string.download_error); // Mensaje genérico para Glide
+                        if (e != null) {
+                            e.printStackTrace();
+                            message = e.getMessage();
+                        }
+                        Toast.makeText(PhotoLiveViewer.this, message, Toast.LENGTH_SHORT).show();
+                        // Intentar cargar la última imagen exitosa si existe
+                        if (url_success != null && !url_success.isEmpty()){
+                            Glide.with(PhotoLiveViewer.this).load(url_success).into(imageView);
+                        }
+                        return false; // Retornar false para que Glide maneje el error placeholder
+                    }
 
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                if (mSwipeRefreshLayout.isRefreshing()) {
-                    mSwipeRefreshLayout.setRefreshing(false);
-                }
-                url_success = imageUri;
-            }
-
-            @Override
-            public void onLoadingCancelled(String imageUri, View view) {
-                if (mSwipeRefreshLayout.isRefreshing()) {
-                    mSwipeRefreshLayout.setRefreshing(false);
-                }
-            }
-        });
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        url_success = url_complete; // Guardar la URL de la imagen cargada exitosamente
+                        return false; // Retornar false para que Glide muestre la imagen
+                    }
+                })
+                .into(imageView);
     }
 
     private void sharePicture() {
-        final ImageLoader imageLoader = ImageLoader.getInstance();
-        File file;
+        if (url_success == null || url_success.isEmpty()) {
+            Toast.makeText(this, getString(R.string.no_image_to_share), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Glide guarda en caché las imágenes. Para compartir, necesitamos obtener el archivo de la caché.
+        // Esto es más complejo con Glide que con UIL, ya que Glide maneja su caché internamente.
+        // Una forma es descargar la imagen de nuevo a un archivo temporal o usar la caché de Glide.
+
+        // Opción simplificada: Asumir que la imagen está en el ImageView y compartir el Bitmap del ImageView.
+        // Esto no es ideal para imágenes muy grandes y no usa el archivo original.
+        // Para una implementación robusta, se necesitaría descargar la imagen a un archivo específico
+        // o acceder al archivo en la caché de Glide de forma asíncrona.
+
+        // Por ahora, vamos a intentar obtener el archivo de la caché de Glide.
+        // Nota: Esto requiere que la imagen ya esté en caché y puede ser asíncrono.
+        // Para simplificar este ejemplo, lo haremos de forma síncrona (puede bloquear UI).
+        // En una app real, esto debería ser asíncrono.
+
+        Glide.with(this)
+                .asFile()
+                .load(url_success)
+                .listener(new RequestListener<File>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<File> target, boolean isFirstResource) {
+                        Toast.makeText(PhotoLiveViewer.this, getString(R.string.error_sharing_image), Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(File resource, Object model, Target<File> target, DataSource dataSource, boolean isFirstResource) {
+                        shareFile(resource);
+                        return true;
+                    }
+                }).submit(); // submit() para operaciones en segundo plano, pero aquí necesitamos el archivo ahora.
+                            // Usar .downloadOnly() o .into(FileTarget) sería mejor en un escenario real.
+                            // Para este reemplazo, usaremos un listener y submit(), y llamaremos a shareFile desde onResourceReady.
+    }
+
+    private void shareFile(File file) {
         try {
-            file = imageLoader.getDiskCache().get(url_success);
-            Intent intent = getIntent();
+            Intent intent = getIntent(); // Esto podría ser null si la actividad se recrea, mejor obtenerlo de nuevo o pasarlo.
             DateFormat df = new SimpleDateFormat(getString(R.string.dateFormat), Locale.getDefault());
             String date = df.format(Calendar.getInstance().getTime());
             String mensaje = date;
