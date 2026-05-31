@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Textos del catálogo de cámaras (títulos, descripciones y mensaje al compartir).
+  Fuente: páginas oficiales de cada cámara en ovsicori.una.ac.cr (verificado 2026-05-31).
+-->
+<resources>
+    <!-- Turrialba -->
+    <string name="cam_turrialba_title">Turrialba</string>
+    <string name="cam_turrialba_info">Cámara en el cráter del volcán Turrialba. La imagen se refresca cada 5 segundos.</string>
+    <string name="cam_turrialba_share">Volcán Turrialba</string>
+
+    <!-- Irazú -->
+    <string name="cam_irazu_title">Irazú</string>
+    <string name="cam_irazu_info">Cámara en la cima del Irazú con vista al cráter. La imagen se refresca cada 5 segundos.</string>
+    <string name="cam_irazu_share">Volcán Irazú</string>
+
+    <!-- Póas (Cráter) -->
+    <string name="cam_craterpoas_title">Póas (Cráter)</string>
+    <string name="cam_craterpoas_info">Cámara en el cráter del volcán Póas. La imagen se refresca cada 5 segundos.</string>
+    <string name="cam_craterpoas_share">Volcán Póas (Cráter)</string>
+
+    <!-- Póas (SO del Cráter) -->
+    <string name="cam_poas_title">Póas (SO del Cráter)</string>
+    <string name="cam_poas_info">Cámara ubicada 1.8 km al suroeste del cráter del Póas. La imagen se refresca cada 5 segundos.</string>
+    <string name="cam_poas_share">Volcán Póas (SO del Cráter)</string>
+
+    <!-- Póas (Chahuites) -->
+    <string name="cam_chahuites_title">Póas (Chahuites)</string>
+    <string name="cam_chahuites_info">Cámara del Póas en el sector Chahuites. La imagen se refresca cada 5 segundos.</string>
+    <string name="cam_chahuites_share">Volcán Póas (Chahuites)</string>
+
+    <!-- Rincón de la Vieja (Sensoria) -->
+    <string name="cam_rincon_title">Rincón de la Vieja (Sensoria)</string>
+    <string name="cam_rincon_info">Cámara del Rincón de la Vieja (Sensoria), unos 4 km al norte del cráter. La imagen se refresca cada 5 segundos.</string>
+    <string name="cam_rincon_share">Volcán Rincón de la Vieja - Sensoria</string>
+
+    <!-- Rincón de la Vieja (Curubandé) -->
+    <string name="cam_curubande_title">Rincón de la Vieja (Curubandé)</string>
+    <string name="cam_curubande_info">Cámara del Rincón de la Vieja en el sector Curubandé, 10 km al noreste de Liberia. La imagen se refresca cada 5 segundos.</string>
+    <string name="cam_curubande_share">Volcán Rincón de la Vieja - Curubandé</string>
+
+    <!-- Rincón de la Vieja (Gavilán / Upala) -->
+    <string name="cam_rincon2_title">Rincón de la Vieja (Gavilán)</string>
+    <string name="cam_rincon2_info">Cámara del Rincón de la Vieja (Gavilán), en Buenos Aires de Upala. La imagen se refresca cada 5 segundos.</string>
+    <string name="cam_rincon2_share">Volcán Rincón de la Vieja - Gavilán</string>
+</resources>
