@@ -35,7 +35,7 @@ catálogo **oficial actualizado** (8 cámaras de ovsicori.una.ac.cr) y una arqui
 | Lenguaje | Java 8/11 | **Kotlin 2.x (K2)** |
 | UI | XML Views + Support Library 26.1.0 | **Jetpack Compose + Material 3** |
 | AGP / Gradle | 7.4.2 / 7.5 | **AGP 8.x / Gradle 8.x** (versión exacta se fija en Fase 2) |
-| compile/targetSdk | 33 | **35 (Android 15)** |
+| compile/targetSdk | 33 | **36 (Android 16)** — requerido por activity/navigation 1.13/2.9 |
 | minSdk | 16 | **26 (Android 8.0)** |
 | Carga de imágenes | Universal Image Loader 1.9.3 | **Coil 3 (`coil-compose`)** |
 | Navegación | 2 Activities + Fragment drawer | **Navigation Compose** (single-Activity) |
@@ -218,7 +218,7 @@ Hoy **no hay tests**. Se introduce una base mínima:
 5. Pull-to-refresh fuerza una recarga inmediata.
 6. Compartir produce un Intent con la imagen y el texto `"{mensaje} [fecha]"`.
 7. `./gradlew test` pasa (incluye tests de `CameraRepository`).
-8. App corre en un dispositivo/emulador con Android 8.0 (API 26) y Android 15 (API 35).
+8. App corre en un dispositivo/emulador con Android 8.0 (API 26) y Android 16 (API 36).
 9. Agregar una cámara nueva requiere editar **un solo** lugar (el catálogo), no 3 switch.
 10. El workflow de GitHub Actions corre verde (build + test + lint) en el PR.
 11. `versionName` = "3.0" y `versionCode` = 18 en el build final.

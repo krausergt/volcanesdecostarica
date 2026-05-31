@@ -1,1 +1,25 @@
+// Configuración de resolución de plugins y repositorios para todo el proyecto.
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+plugins {
+    // Permite resolver automáticamente un JDK por toolchain (usado por jvmToolchain).
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.10.0'
+}
+
+// Centraliza los repositorios de dependencias; ningún módulo declara los suyos.
+dependencyResolutionManagement {
+    repositoriesMode = RepositoriesMode.FAIL_ON_PROJECT_REPOS
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = 'Volcanes de Costa Rica'
 include ':app'

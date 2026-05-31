@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      Tema base de la ventana. El color/estilo real lo aplica Compose (Material 3);
+      este tema sólo provee una ventana sin ActionBar para el contenido declarativo.
+    -->
+    <style name="Theme.VolcanesCostaRica" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
