@@ -5,34 +5,34 @@ plugins {
 }
 
 android {
-    namespace 'krausoft.volcanesdecostarica'
-    compileSdk 36
+    namespace = 'krausoft.volcanesdecostarica'
+    compileSdk = 36
 
     defaultConfig {
-        applicationId 'krausoft.volcanesdecostarica'
-        minSdk 26
-        targetSdk 36
-        versionCode 18
-        versionName '3.0'
+        applicationId = 'krausoft.volcanesdecostarica'
+        minSdk = 26
+        targetSdk = 36
+        versionCode = 18
+        versionName = '3.0'
 
-        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        testInstrumentationRunner = 'androidx.test.runner.AndroidJUnitRunner'
     }
 
     buildTypes {
         release {
             // Sin ofuscación por ahora; se evaluará al preparar el release final.
-            minifyEnabled false
+            minifyEnabled = false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     buildFeatures {
-        compose true
+        compose = true
     }
 }
 
