@@ -2,4 +2,6 @@
 <!-- Textos comunes de la interfaz (acciones, accesibilidad). -->
 <resources>
     <string name="cd_back">Atrás</string>
+    <string name="source_ovsicori">Fuente: OVSICORI-UNA</string>
+    <string name="source_url">https://www.ovsicori.una.ac.cr/</string>
 </resources>
