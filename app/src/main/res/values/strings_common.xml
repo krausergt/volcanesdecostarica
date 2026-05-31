@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Textos comunes de la interfaz (acciones, accesibilidad). -->
+<resources>
+    <string name="cd_back">Atrás</string>
+</resources>
