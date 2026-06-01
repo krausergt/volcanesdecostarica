@@ -13,11 +13,14 @@ import krausoft.volcanesdecostarica.data.CameraRepository
  * Estado de la pantalla del visor.
  *
  * @property imageUrl URL actual de la imagen (con cache-buster ?t=).
- * @property isRefreshing si hay una carga de imagen en curso.
+ * @property isRefreshing si se está mostrando el indicador de pull-to-refresh
+ *   (sólo en refrescos manuales, no en los automáticos).
+ * @property hasError si la última carga de imagen falló (p. ej. cámara sin señal).
  */
 data class CameraUiState(
     val imageUrl: String = "",
     val isRefreshing: Boolean = false,
+    val hasError: Boolean = false,
 )
 
 /**
@@ -29,14 +32,24 @@ class CameraViewModel(val camera: Camera) : ViewModel() {
     private val _uiState = MutableStateFlow(CameraUiState(imageUrl = freshUrl()))
     val uiState: StateFlow<CameraUiState> = _uiState.asStateFlow()
 
-    /** Regenera la URL con un nuevo ?t= para forzar la recarga de la imagen. */
+    /** Refresco automático (timer): cambia la URL sin mostrar el spinner. */
     fun refresh() {
         _uiState.value = _uiState.value.copy(imageUrl = freshUrl())
     }
 
-    /** Indica si hay una carga en curso (lo reportan los callbacks de Coil). */
-    fun setRefreshing(refreshing: Boolean) {
-        _uiState.value = _uiState.value.copy(isRefreshing = refreshing)
+    /** Refresco manual (pull-to-refresh): muestra el spinner y recarga. */
+    fun manualRefresh() {
+        _uiState.value = _uiState.value.copy(imageUrl = freshUrl(), isRefreshing = true)
+    }
+
+    /** La imagen cargó bien: oculta el spinner y limpia el error. */
+    fun onImageSuccess() {
+        _uiState.value = _uiState.value.copy(isRefreshing = false, hasError = false)
+    }
+
+    /** La imagen falló (sin señal/vacía): oculta el spinner y marca el error. */
+    fun onImageError() {
+        _uiState.value = _uiState.value.copy(isRefreshing = false, hasError = true)
     }
 
     // URL de imagen con la marca de tiempo actual como cache-buster.

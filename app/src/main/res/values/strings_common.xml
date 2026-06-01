@@ -4,4 +4,5 @@
     <string name="cd_back">Atrás</string>
     <string name="source_ovsicori">Fuente: OVSICORI-UNA</string>
     <string name="source_url">https://www.ovsicori.una.ac.cr/</string>
+    <string name="image_unavailable">Imagen no disponible en este momento</string>
 </resources>

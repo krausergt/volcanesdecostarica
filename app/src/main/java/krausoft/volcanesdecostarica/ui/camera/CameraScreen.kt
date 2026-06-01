@@ -1,7 +1,10 @@
 package krausoft.volcanesdecostarica.ui.camera
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,11 +22,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -31,14 +36,17 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
+import kotlinx.coroutines.delay
 import krausoft.volcanesdecostarica.R
 import krausoft.volcanesdecostarica.data.CameraRepository
-import kotlinx.coroutines.delay
+
+// Relación de aspecto de las cámaras de OVSICORI (todas entregan imágenes 4:3).
+private const val CAMERA_ASPECT_RATIO = 4f / 3f
 
 /**
- * Visor de una cámara en vivo: muestra la imagen (que se auto-refresca cada
- * [krausoft.volcanesdecostarica.data.Camera.refreshMs]), permite refrescar con
- * pull-to-refresh y muestra la descripción y la fuente.
+ * Visor de una cámara en vivo: la imagen (4:3) se muestra arriba y se auto-refresca
+ * cada [krausoft.volcanesdecostarica.data.Camera.refreshMs]; debajo van la
+ * descripción y la fuente. Permite refrescar con pull-to-refresh.
  *
  * @param cameraId id recibido por la ruta de navegación.
  * @param onBack acción para volver a la pantalla anterior.
@@ -97,25 +105,41 @@ fun CameraScreen(cameraId: String, onBack: () -> Unit) {
                 .fillMaxSize()
                 .padding(innerPadding),
         ) {
+            // Imagen de la cámara en la parte superior (4:3), con pull-to-refresh.
             PullToRefreshBox(
                 isRefreshing = uiState.isRefreshing,
-                onRefresh = { viewModel.refresh() },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
+                onRefresh = { viewModel.manualRefresh() },
+                modifier = Modifier.fillMaxWidth(),
             ) {
-                AsyncImage(
-                    model = uiState.imageUrl,
-                    contentDescription = stringResource(camera.titleRes),
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier.fillMaxSize(),
-                    onLoading = { viewModel.setRefreshing(true) },
-                    onSuccess = { viewModel.setRefreshing(false) },
-                    onError = { viewModel.setRefreshing(false) },
-                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(CAMERA_ASPECT_RATIO)
+                        .background(MaterialTheme.colorScheme.surfaceVariant),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    AsyncImage(
+                        model = uiState.imageUrl,
+                        contentDescription = stringResource(camera.titleRes),
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier.fillMaxSize(),
+                        onSuccess = { viewModel.onImageSuccess() },
+                        onError = { viewModel.onImageError() },
+                    )
+                    // Aviso cuando la cámara no entrega imagen (respuesta vacía/sin señal).
+                    if (uiState.hasError) {
+                        Text(
+                            text = stringResource(R.string.image_unavailable),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(16.dp),
+                        )
+                    }
+                }
             }
 
-            // Descripción de la cámara y enlace a la fuente oficial.
+            // Descripción de la cámara y enlace a la fuente oficial, justo debajo.
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
                     text = stringResource(camera.infoRes),
