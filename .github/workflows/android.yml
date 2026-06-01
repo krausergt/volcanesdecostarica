@@ -1,0 +1,55 @@
+# CI para Volcanes de Costa Rica: compila, ejecuta tests unitarios y lint en cada
+# push y pull request hacia master.
+
+name: Android CI
+
+on:
+  push:
+    branches: [ "master", "modernizacion-compose" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build-and-test:
+    name: Build · Test · Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configura JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Permisos de ejecución al wrapper de Gradle
+        run: chmod +x gradlew
+
+      - name: Crea local.properties con la ruta del SDK de Android
+        run: echo "sdk.dir=$ANDROID_HOME" > local.properties
+
+      - name: Compila el APK debug
+        run: ./gradlew assembleDebug --no-daemon
+
+      - name: Ejecuta los tests unitarios
+        run: ./gradlew testDebugUnitTest --no-daemon
+
+      - name: Ejecuta Android Lint
+        run: ./gradlew lintDebug --no-daemon
+
+      - name: Publica el reporte de Lint como artefacto
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-report
+          path: app/build/reports/lint-results-debug.html
+
+      - name: Publica el reporte de tests como artefacto
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: app/build/reports/tests/testDebugUnitTest/
