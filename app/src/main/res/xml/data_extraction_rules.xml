@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Reglas de extracción de datos para Android 12+ (API 31+).
+  La app no almacena datos sensibles, así que se permite el backup completo
+  tanto en la nube como en transferencias de dispositivo a dispositivo.
+-->
+<data-extraction-rules>
+    <cloud-backup />
+    <device-transfer />
+</data-extraction-rules>

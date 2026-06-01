@@ -5,20 +5,20 @@ agp = "8.13.2"
 kotlin = "2.3.21"
 
 # AndroidX / Compose
-coreKtx = "1.16.0"
-composeBom = "2026.05.00"
+coreKtx = "1.18.0"
+composeBom = "2026.05.01"
 activityCompose = "1.13.0"
 lifecycle = "2.10.0"
 navigationCompose = "2.9.8"
-datastore = "1.1.7"
+datastore = "1.2.1"
 
 # Imágenes
 coil = "3.4.0"
 
 # Test
 junit = "4.13.2"
-androidxJunit = "1.2.1"
-espressoCore = "3.6.1"
+androidxJunit = "1.3.0"
+espressoCore = "3.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Textos comunes de la interfaz (acciones, accesibilidad). -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="cd_back">Atrás</string>
     <string name="source_ovsicori">Fuente: OVSICORI-UNA</string>
     <string name="source_url">https://www.ovsicori.una.ac.cr/</string>
-    <string name="image_unavailable">Imagen no disponible en este momento</string>
+    <!-- tools:ignore: "momento" es español correcto; el lint lo confunde con inglés. -->
+    <string name="image_unavailable" tools:ignore="Typos">Imagen no disponible en este momento</string>
     <string name="share_no_image">Esperá que cargue una imagen para compartir</string>
     <string name="share_label">Compartir</string>
     <string name="cd_share">Compartir imagen</string>
