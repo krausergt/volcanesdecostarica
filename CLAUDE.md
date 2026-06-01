@@ -4,68 +4,96 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Android app that displays live webcam images from Costa Rican volcanoes and a Twitter/X timeline from OVSICORI-UNA. Written entirely in **Java** (no Kotlin). Do not introduce Kotlin unless explicitly asked.
+Android app that displays live webcam images from Costa Rican volcanoes (OVSICORI-UNA cameras).
+Written entirely in **Kotlin + Jetpack Compose** (no Java, no XML layouts, no Support Library).
 
-## Stack (Legacy — do not upgrade unless asked)
+## Stack
 
-- **AGP:** 3.1.0 — incompatible with modern Android Studio/Gradle 8.x. Do not upgrade without explicit instruction.
-- **Gradle:** 4.4
-- **compileSdkVersion / targetSdkVersion:** 26 (Android 8.0)
-- **Support Library:** 26.1.0 — uses `android.support.*`, NOT AndroidX. Do not migrate to AndroidX unless asked.
-- **Image loading:** Universal Image Loader 1.9.3 (not Glide/Coil)
-- **Twitter:** Twitter SDK 3.2.0
-- **Crash reporting:** Fabric (not modern Firebase Crashlytics)
+- **Language:** Kotlin 2.3.21 (K2 compiler)
+- **UI:** Jetpack Compose + Material 3 (single-Activity, `VolcanoApp` NavHost)
+- **AGP:** 8.13.2 / **Gradle:** 8.13 / **JDK:** 17 (via SDKMAN, `17.0.11-tem`)
+- **compile/targetSdk:** 36 / **minSdk:** 26 (Android 8.0)
+- **Image loading:** Coil 3 (`coil-compose` + `coil-network-okhttp`)
+- **Navigation:** Navigation Compose 2.9.8
+- **Lifecycle/ViewModel:** lifecycle-viewmodel-compose 2.10.0
+- **Versions:** centralized in `gradle/libs.versions.toml` (version catalog)
 
 ## Build Commands
 
+JDK 17 must be activated via SDKMAN before running Gradle:
 ```bash
-./gradlew assembleDebug    # debug build
-./gradlew assembleRelease  # release build
-./gradlew clean            # clean
+source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk use java 17.0.11-tem
+./gradlew assembleDebug         # debug build
+./gradlew assembleRelease       # release build
+./gradlew testDebugUnitTest     # unit tests (JVM)
+./gradlew lintDebug             # Android Lint
+./gradlew clean
 ```
 
-There are no automated tests — no `test/` or `androidTest/` directories exist.
+`local.properties` is gitignored — if missing, create it:
+`echo "sdk.dir=$HOME/Library/Android/sdk" > local.properties`
 
 ## Architecture
 
-Two activities only:
-- `MainActivity` — navigation drawer + Twitter timeline (OVSICORI_UNA)
-- `PhotoLiveViewer` — live camera viewer with auto-refresh
+Single-Activity app (Compose + Navigation):
 
-**Camera selection is entirely position-based.** The position integer is passed from `NavigationDrawerFragment` to `PhotoLiveViewer` via `Intent.putExtra(OPTION_SELECTED, position)`. Every switch statement in `PhotoLiveViewer` uses this integer.
+```
+MainActivity
+  └── VolcanoApp (NavHost)
+        ├── HomeScreen        — lista de 8 cámaras (CameraRepository)
+        └── CameraScreen      — visor en vivo (CameraViewModel + Coil AsyncImage)
+              └── ImageShareHelper — comparte via FileProvider
+```
+
+**Data layer:**
+- `data/Camera.kt` — data class (id, feedSlug, refreshMs, @StringRes)
+- `data/CameraRepository.kt` — catálogo de 8 cámaras + `imageUrl()` + `findById()`
 
 ## Adding a New Camera
 
-Use `/add-camera` — it walks through all the places that need updating. The steps are:
-1. Add string resources in `app/src/main/res/values/strings.xml`
-2. Add the title to the `titles` array in `NavigationDrawerFragment.getData()`
-3. Add a `case` to the URL switch in `PhotoLiveViewer.onCreate()`
-4. Add a `case` to the timer switch in `PhotoLiveViewer.startTimer()`
-5. Add a `case` to the sharing switch in `PhotoLiveViewer.sharePicture()`
+Edit **a single place** — `CameraRepository.cameras`:
+```kotlin
+camera("livenuevacam", R.string.cam_nueva_title, R.string.cam_nueva_info, R.string.cam_nueva_share),
+```
+Then add the corresponding strings to `res/values/strings_cameras.xml`. That's it.
 
 ## Camera URL Pattern
 
-All camera images follow this pattern:
+All camera images follow this pattern (confirmed against official OVSICORI site, 2026-05-31):
 ```
-{url_main}{feed_slug}{url_end}{unix_timestamp_seconds}
+https://www.ovsicori.una.ac.cr/images/stories/camaras/{feedSlug}/camara.jpg?t={unix_millis}
 ```
-- `url_main` = `http://www.ovsprivado.una.ac.cr/images/stories/live`
-- `url_end` = `/camara.jpg?`
-- `feed_slug` = camera-specific string (e.g., `turrialba`, `poas`, `rincon`)
-
-The timestamp at the end busts the HTTP cache on each refresh.
-
-## Timer Intervals
-
-Three intervals defined in `strings.xml`:
-- `Timer10seg` = 10000 ms (10 s) — used only for Turrialba cam 1
-- `Timer60seg` = 60000 ms (1 min) — default for most cameras
-- `Timer5min` = 300000 ms (5 min) — used for slow/remote cameras
+- **`feedSlug`** examples: `liveturrialba`, `liveirazu`, `livecraterpoas`, `livepoas`,
+  `livechahuites`, `liverincon`, `livecurubande`, `liverincon2`
+- **`?t=`** is a cache-buster; the server ignores the value — only needs to change each request.
+- All cameras refresh every **5 s** (per the official site declaration).
 
 ## Image Sharing
 
-Sharing grabs the last successfully loaded image from Universal Image Loader's disk cache via `imageLoader.getDiskCache().get(url_success)` and shares it via FileProvider (authority: `krausoft.volcanesdecostarica.fileprovider`). The share message format is: `"{Mensaje string} [{dd-MM-yyyy, HH:mm:ss}]"`.
+`ImageShareHelper.shareImage()` re-encodes the current bitmap to JPEG in `cacheDir` and
+shares via `FileProvider` (authority: `krausoft.volcanesdecostarica.fileprovider`).
+Share message format: `"{shareMessage} [{dd-MM-yyyy, HH:mm:ss}]"`.
 
-## Sensitive Data in Source
+The bitmap is extracted from `AsyncImagePainter.State.Success.result.image.toBitmap()`.
 
-`strings.xml` contains Twitter API keys (`com.twitter.sdk.android.CONSUMER_KEY` / `CONSUMER_SECRET`) and a Fabric API key in `AndroidManifest.xml`. Do not log or expose these values.
+## Tests
+
+Unit tests live in `app/src/test/`:
+- `data/CameraRepositoryTest.kt` — 6 tests: catalog of 8, slugs, refresh rate, URL format,
+  cache-buster changes, findById.
+
+No instrumented tests yet (`src/androidTest/` is empty).
+
+## CI
+
+GitHub Actions (`.github/workflows/android.yml`): `assembleDebug` + `testDebugUnitTest` +
+`lintDebug` with JDK 17 Temurin, triggered on push/PR to `master`.
+
+## Code Conventions
+
+- **Comments:** concise comments in **Spanish** on every method/function and non-obvious
+  blocks, explaining *what* it does and *why* when not obvious — for someone new to the code.
+  KDoc (`/** */`) on public APIs; single-line on private/internal. No redundant comments.
+- Kotlin idiomatic: `val` by default, null-safety, no `!!` unless justified.
+- All user-visible strings in resources (never hardcoded in UI).
+- No Java. No `android.support.*`. No XML layouts. No Universal Image Loader.
