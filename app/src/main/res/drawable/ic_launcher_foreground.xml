@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Frente del ícono adaptativo (viewport 108×108, zona segura ≈ 21–87).
+  Silueta blanca del volcán con perfil de doble cráter + llama ámbar.
+  Se dibuja sobre el fondo rojo lava del ic_launcher_background.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Cuerpo del volcán: pendientes suaves hacia el cráter doble. -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M18,84 L40,40 Q48,14 54,22 Q60,14 68,40 L90,84 Z" />
+
+    <!-- Llama ámbar que erupciona desde el cráter. -->
+    <path
+        android:fillColor="#FFAB40"
+        android:pathData="M49,26 Q54,10 59,26 Q56,30 54,29 Q52,30 49,26 Z" />
+</vector>

@@ -12,6 +12,9 @@ lifecycle = "2.10.0"
 navigationCompose = "2.9.8"
 datastore = "1.2.1"
 
+# Splash screen
+splashscreen = "1.0.1"
+
 # Imágenes
 coil = "3.4.0"
 
@@ -22,6 +25,7 @@ espressoCore = "3.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
 
 # Compose (versiones via BOM)
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }

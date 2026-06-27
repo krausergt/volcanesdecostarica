@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import krausoft.volcanesdecostarica.ui.theme.VolcanesCostaRicaTheme
 
 /**
@@ -12,6 +13,9 @@ import krausoft.volcanesdecostarica.ui.theme.VolcanesCostaRicaTheme
  */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Debe llamarse ANTES de super.onCreate() para que el sistema configure
+        // la ventana del splash antes de que se infle el layout.
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge() // dibuja el contenido detrás de las barras del sistema
         setContent {

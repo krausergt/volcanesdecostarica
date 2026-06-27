@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Vector base para el splash screen animado.
+  Estado inicial: volcán en escala 0 (crece con la animación),
+  llama con alpha 0 (se desvanece encima).
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!--
+      Grupo con pivot en la base del volcán para que el crecimiento
+      sea de abajo hacia arriba (efecto "emerge del magma").
+    -->
+    <group
+        android:name="volcano_group"
+        android:pivotX="54"
+        android:pivotY="84"
+        android:scaleX="0"
+        android:scaleY="0">
+
+        <!-- Silueta blanca del volcán con doble cráter. -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M18,84 L40,40 Q48,14 54,22 Q60,14 68,40 L90,84 Z" />
+
+        <!-- Llama ámbar: invisible al inicio, se activa con el animator aparte. -->
+        <path
+            android:name="lava_flame"
+            android:fillColor="#FFAB40"
+            android:fillAlpha="0"
+            android:pathData="M46,27 Q54,6 62,27 Q58,33 54,31 Q50,33 46,27 Z" />
+    </group>
+</vector>
