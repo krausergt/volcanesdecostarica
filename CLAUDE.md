@@ -47,16 +47,21 @@ MainActivity
 ```
 
 **Data layer:**
-- `data/Camera.kt` — data class (id, feedSlug, refreshMs, @StringRes)
+- `data/Camera.kt` — data class (id, feedSlug, refreshMs, volcanoGroupRes, @StringRes)
 - `data/CameraRepository.kt` — catálogo de 8 cámaras + `imageUrl()` + `findById()`
+
+`HomeScreen` agrupa las 8 cámaras por volcán (4 grupos con thumbnails en vivo).
+La barra de navegación inferior (Cámaras | Noticias | Mapa) ya está cableada para
+pestañas futuras.
 
 ## Adding a New Camera
 
 Edit **a single place** — `CameraRepository.cameras`:
 ```kotlin
-camera("livenuevacam", R.string.cam_nueva_title, R.string.cam_nueva_info, R.string.cam_nueva_share),
+camera("livenuevacam", R.string.cam_nueva_title, R.string.cam_nueva_info, R.string.cam_nueva_share, R.string.volcano_nueva),
 ```
-Then add the corresponding strings to `res/values/strings_cameras.xml`. That's it.
+Then add the corresponding strings to `res/values/strings_cameras.xml` (title, info, share,
+and the volcano group name if it's a new volcano). That's it.
 
 ## Camera URL Pattern
 
@@ -89,6 +94,15 @@ No instrumented tests yet (`src/androidTest/` is empty).
 
 GitHub Actions (`.github/workflows/android.yml`): `assembleDebug` + `testDebugUnitTest` +
 `lintDebug` with JDK 17 Temurin, triggered on push/PR to `master`.
+
+## Theme
+
+`dynamicColor = false` en `Theme.kt` — la paleta volcánica (LavaRed, EmberBrown, SulfurGold)
+aplica siempre independientemente del fondo de pantalla del dispositivo. No reactivar:
+la app tiene identidad visual propia que Material You sobreescribiría.
+
+`crossfade` en `ImageRequest.Builder` requiere `import coil3.request.crossfade` —
+es una extension function en el módulo core, no en `coil3.compose`.
 
 ## Code Conventions
 
