@@ -13,9 +13,10 @@ Written entirely in **Kotlin + Jetpack Compose** (no Java, no XML layouts, no Su
 - **UI:** Jetpack Compose + Material 3 (single-Activity, `VolcanoApp` NavHost)
 - **AGP:** 8.13.2 / **Gradle:** 8.13 / **JDK:** 17 (via SDKMAN, `17.0.11-tem`)
 - **compile/targetSdk:** 36 / **minSdk:** 26 (Android 8.0)
-- **Image loading:** Coil 3 (`coil-compose` + `coil-network-okhttp`)
+- **Image loading:** Coil 3.4.0 (`coil-compose` + `coil-network-okhttp`)
 - **Navigation:** Navigation Compose 2.9.8
 - **Lifecycle/ViewModel:** lifecycle-viewmodel-compose 2.10.0
+- **Compose BOM:** 2026.05.01 (pins all Compose library versions)
 - **Versions:** centralized in `gradle/libs.versions.toml` (version catalog)
 
 ## Build Commands
