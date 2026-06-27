@@ -22,4 +22,6 @@ data class Camera(
     @StringRes val titleRes: Int,
     @StringRes val infoRes: Int,
     @StringRes val shareRes: Int,
+    /** Nombre del volcán al que pertenece esta cámara; se usa para agrupar en la lista. */
+    @StringRes val volcanoGroupRes: Int,
 )

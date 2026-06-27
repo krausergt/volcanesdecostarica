@@ -21,6 +21,8 @@ data class CameraUiState(
     val imageUrl: String = "",
     val isRefreshing: Boolean = false,
     val hasError: Boolean = false,
+    /** Marca de tiempo (ms) de la última imagen cargada con éxito; 0 = aún no cargó. */
+    val lastRefreshedMs: Long = 0L,
 )
 
 /**
@@ -42,9 +44,13 @@ class CameraViewModel(val camera: Camera) : ViewModel() {
         _uiState.value = _uiState.value.copy(imageUrl = freshUrl(), isRefreshing = true)
     }
 
-    /** La imagen cargó bien: oculta el spinner y limpia el error. */
+    /** La imagen cargó bien: oculta el spinner, limpia el error y registra el momento. */
     fun onImageSuccess() {
-        _uiState.value = _uiState.value.copy(isRefreshing = false, hasError = false)
+        _uiState.value = _uiState.value.copy(
+            isRefreshing = false,
+            hasError = false,
+            lastRefreshedMs = System.currentTimeMillis(),
+        )
     }
 
     /** La imagen falló (sin señal/vacía): oculta el spinner y marca el error. */

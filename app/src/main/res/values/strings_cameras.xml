@@ -43,4 +43,10 @@
     <string name="cam_rincon2_title">Rincón de la Vieja (Gavilán)</string>
     <string name="cam_rincon2_info">Cámara del Rincón de la Vieja (Gavilán), en Buenos Aires de Upala. La imagen se refresca cada 5 segundos.</string>
     <string name="cam_rincon2_share">Volcán Rincón de la Vieja - Gavilán</string>
+
+    <!-- Nombres de volcanes para los encabezados de sección en el listado -->
+    <string name="volcano_turrialba">Turrialba</string>
+    <string name="volcano_irazu">Irazú</string>
+    <string name="volcano_poas">Póas</string>
+    <string name="volcano_rincon_vieja">Rincón de la Vieja</string>
 </resources>

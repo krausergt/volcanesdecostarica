@@ -19,14 +19,14 @@ object CameraRepository {
 
     /** Catálogo oficial de cámaras, en el orden en que se muestran al usuario. */
     val cameras: List<Camera> = listOf(
-        camera("liveturrialba", R.string.cam_turrialba_title, R.string.cam_turrialba_info, R.string.cam_turrialba_share),
-        camera("liveirazu", R.string.cam_irazu_title, R.string.cam_irazu_info, R.string.cam_irazu_share),
-        camera("livecraterpoas", R.string.cam_craterpoas_title, R.string.cam_craterpoas_info, R.string.cam_craterpoas_share),
-        camera("livepoas", R.string.cam_poas_title, R.string.cam_poas_info, R.string.cam_poas_share),
-        camera("livechahuites", R.string.cam_chahuites_title, R.string.cam_chahuites_info, R.string.cam_chahuites_share),
-        camera("liverincon", R.string.cam_rincon_title, R.string.cam_rincon_info, R.string.cam_rincon_share),
-        camera("livecurubande", R.string.cam_curubande_title, R.string.cam_curubande_info, R.string.cam_curubande_share),
-        camera("liverincon2", R.string.cam_rincon2_title, R.string.cam_rincon2_info, R.string.cam_rincon2_share),
+        camera("liveturrialba", R.string.cam_turrialba_title, R.string.cam_turrialba_info, R.string.cam_turrialba_share, R.string.volcano_turrialba),
+        camera("liveirazu", R.string.cam_irazu_title, R.string.cam_irazu_info, R.string.cam_irazu_share, R.string.volcano_irazu),
+        camera("livecraterpoas", R.string.cam_craterpoas_title, R.string.cam_craterpoas_info, R.string.cam_craterpoas_share, R.string.volcano_poas),
+        camera("livepoas", R.string.cam_poas_title, R.string.cam_poas_info, R.string.cam_poas_share, R.string.volcano_poas),
+        camera("livechahuites", R.string.cam_chahuites_title, R.string.cam_chahuites_info, R.string.cam_chahuites_share, R.string.volcano_poas),
+        camera("liverincon", R.string.cam_rincon_title, R.string.cam_rincon_info, R.string.cam_rincon_share, R.string.volcano_rincon_vieja),
+        camera("livecurubande", R.string.cam_curubande_title, R.string.cam_curubande_info, R.string.cam_curubande_share, R.string.volcano_rincon_vieja),
+        camera("liverincon2", R.string.cam_rincon2_title, R.string.cam_rincon2_info, R.string.cam_rincon2_share, R.string.volcano_rincon_vieja),
     )
 
     /** Devuelve la cámara con ese [id], o null si no existe en el catálogo. */
@@ -41,7 +41,7 @@ object CameraRepository {
         "$URL_BASE${camera.feedSlug}$IMAGE_PATH$millis"
 
     /** Atajo para crear una entrada del catálogo; el id coincide con el slug. */
-    private fun camera(slug: String, titleRes: Int, infoRes: Int, shareRes: Int): Camera =
+    private fun camera(slug: String, titleRes: Int, infoRes: Int, shareRes: Int, volcanoGroupRes: Int): Camera =
         Camera(
             id = slug,
             feedSlug = slug,
@@ -49,5 +49,6 @@ object CameraRepository {
             titleRes = titleRes,
             infoRes = infoRes,
             shareRes = shareRes,
+            volcanoGroupRes = volcanoGroupRes,
         )
 }

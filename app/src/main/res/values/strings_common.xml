@@ -9,4 +9,16 @@
     <string name="share_no_image">Esperá que cargue una imagen para compartir</string>
     <string name="share_label">Compartir</string>
     <string name="cd_share">Compartir imagen</string>
+
+    <!-- Indicador de actualización en la pantalla del visor -->
+    <string name="live_indicator">En vivo</string>
+    <string name="updated_just_now">Actualizado ahora</string>
+    <!-- %1$d = segundos transcurridos desde la última actualización -->
+    <string name="updated_ago_seconds">Actualizado hace %1$d s</string>
+
+    <!-- Pestañas de la barra de navegación inferior -->
+    <string name="tab_cameras">Cámaras</string>
+    <string name="tab_news">Noticias</string>
+    <string name="tab_map">Mapa</string>
+    <string name="coming_soon">Próximamente</string>
 </resources>
