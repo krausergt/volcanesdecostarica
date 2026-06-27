@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Frente del ícono adaptativo (viewport 108×108, zona segura ≈ 21–87).
-  Silueta blanca del volcán con perfil de doble cráter + llama ámbar.
-  Se dibuja sobre el fondo rojo lava del ic_launcher_background.
+  Frente del ícono adaptativo: dos picos de montaña superpuestos,
+  fiel al diseño PNG original del icono de la app.
+
+  Viewport 108×108dp.  Los ápices a y=24 e y=28 quedan dentro
+  de la zona segura r=33 centrada en (54,54).
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
@@ -10,13 +12,22 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- Cuerpo del volcán: pendientes suaves hacia el cráter doble. -->
+    <!-- Pico izquierdo (secundario, detrás): ápice en (44, 28). -->
     <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M18,84 L40,40 Q48,14 54,22 Q60,14 68,40 L90,84 Z" />
+        android:fillColor="#F05A28"
+        android:pathData="M18,82 L44,28 L68,82 Z" />
 
-    <!-- Llama ámbar que erupciona desde el cráter. -->
+    <!-- Pico derecho (principal, enfrente): más alto, cubre el flanco derecho del izquierdo. -->
     <path
-        android:fillColor="#FFAB40"
-        android:pathData="M49,26 Q54,10 59,26 Q56,30 54,29 Q52,30 49,26 Z" />
+        android:fillColor="#F05A28"
+        android:pathData="M38,82 L64,24 L90,82 Z" />
+
+    <!--
+      Triángulo de sombra en el valle entre los dos ápices.
+      Llena el hueco blanco con un tono más oscuro para dar profundidad
+      (mismo efecto visual del notch oscuro del ícono PNG original).
+    -->
+    <path
+        android:fillColor="#C0390F"
+        android:pathData="M44,28 L64,24 L52,48 Z" />
 </vector>
