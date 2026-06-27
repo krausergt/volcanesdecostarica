@@ -34,7 +34,7 @@
 
         <!-- Sombra de valle: tono gris-blanco levemente más oscuro para mantener la profundidad. -->
         <path
-            android:fillColor="#E0E0E0"
+            android:fillColor="#CCCCCC"
             android:pathData="M44,28 L64,24 L52,48 Z" />
     </group>
 </vector>

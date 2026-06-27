@@ -12,22 +12,21 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- Pico izquierdo (secundario, detrás): ápice en (44, 28). -->
+    <!-- Pico izquierdo (secundario, detrás): ápice en (44, 28). LavaRed paleta de la app. -->
     <path
-        android:fillColor="#F05A28"
+        android:fillColor="#BF360C"
         android:pathData="M18,82 L44,28 L68,82 Z" />
 
     <!-- Pico derecho (principal, enfrente): más alto, cubre el flanco derecho del izquierdo. -->
     <path
-        android:fillColor="#F05A28"
+        android:fillColor="#BF360C"
         android:pathData="M38,82 L64,24 L90,82 Z" />
 
     <!--
       Triángulo de sombra en el valle entre los dos ápices.
-      Llena el hueco blanco con un tono más oscuro para dar profundidad
-      (mismo efecto visual del notch oscuro del ícono PNG original).
+      LavaContainerDark (#8E2C00) — más oscuro que LavaRed para dar profundidad.
     -->
     <path
-        android:fillColor="#C0390F"
+        android:fillColor="#8E2C00"
         android:pathData="M44,28 L64,24 L52,48 Z" />
 </vector>
