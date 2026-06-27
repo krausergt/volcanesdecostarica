@@ -21,4 +21,29 @@
     <string name="tab_news">Noticias</string>
     <string name="tab_map">Mapa</string>
     <string name="coming_soon">Próximamente</string>
+
+    <!-- Pantalla Acerca de -->
+    <string name="about_title">Acerca de</string>
+    <string name="about_description">App no oficial para ver en tiempo real las imágenes de las cámaras en vivo del OVSICORI-UNA en los volcanes de Costa Rica.</string>
+    <string name="about_data_source_title">Fuente de datos</string>
+    <string name="about_data_source_body">Las imágenes son propiedad del Observatorio Vulcanológico y Sismológico de Costa Rica (OVSICORI-UNA). Esta app no está afiliada ni respaldada por el OVSICORI-UNA.</string>
+    <string name="about_contact_title">Contacto</string>
+    <string name="about_contact_email">krausoft@gmail.com</string>
+    <string name="about_ovsicori_link">ovsicori.una.ac.cr</string>
+    <string name="about_version">Versión %1$s</string>
+
+    <!-- Exención de responsabilidad -->
+    <string name="about_disclaimer_title">Exención de responsabilidad</string>
+    <string name="about_disclaimer_body">Las imágenes provienen directamente de las cámaras del OVSICORI-UNA y se muestran sin modificaciones. Esta aplicación no garantiza la disponibilidad, exactitud ni actualidad de la información mostrada. Para alertas e información oficial sobre actividad volcánica en Costa Rica, consulte directamente al OVSICORI-UNA.</string>
+
+    <!-- Licencia y derechos -->
+    <string name="about_license_title">Licencia</string>
+    <string name="about_license_copyright">© %1$d Krausoft. Todos los derechos reservados.</string>
+    <string name="about_license_open_source">Esta aplicación utiliza bibliotecas de código abierto (Kotlin, Jetpack Compose, Material 3, Coil) distribuidas bajo la Licencia Apache 2.0.</string>
+    <string name="about_apache_link">Ver Apache License 2.0</string>
+    <string name="about_apache_url">https://www.apache.org/licenses/LICENSE-2.0</string>
+
+    <!-- Divulgación de IA -->
+    <string name="about_ai_title">Desarrollo asistido por IA</string>
+    <string name="about_ai_body">Parte del código de esta aplicación fue generado con asistencia de inteligencia artificial (Claude, de Anthropic). Todo el código fue revisado y verificado por desarrolladores humanos antes de su distribución.</string>
 </resources>
