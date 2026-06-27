@@ -1,86 +1,84 @@
 ---
 name: add-camera
-description: Add a new volcano camera to the app. Updates all 5 required locations: strings.xml, NavigationDrawerFragment titles array, and the three switch statements in PhotoLiveViewer (URL, timer, sharing).
+description: Agrega una nueva cámara de volcán a la app. Solo requiere editar dos archivos: CameraRepository.kt y strings_cameras.xml.
 disable-model-invocation: true
 ---
 
-You are adding a new volcano camera to the Volcanes de Costa Rica app. This requires editing exactly 5 places. Follow each step in order.
+Vas a agregar una nueva cámara al catálogo de la app Volcanes de Costa Rica.
+La arquitectura es data-driven: **solo se editan dos archivos**.
 
-## Step 1: Gather information
+## Paso 1: Recopilar información
 
-Ask the user for:
-1. **Camera name** (short, for the navigation drawer, e.g., "Arenal")
-2. **Feed slug** (the URL segment, e.g., `arenal` — will be used in the camera URL)
-3. **Info text** (description shown below the image, in Spanish, including the refresh interval)
-4. **Share message** (e.g., "Volcán Arenal")
-5. **Refresh interval** — which timer to use:
-   - `Timer10seg` (10 s) — very fast cameras
-   - `Timer60seg` (60 s) — standard (most cameras)
-   - `Timer5min` (5 min) — slow/remote cameras
+Pedile al usuario:
 
-If the user ran `/add-camera <name>` with a name as argument, pre-fill what you can and ask only for what's missing.
+1. **feedSlug** — segmento de URL de la cámara, tal como aparece en el sitio de OVSICORI
+   (ej. `livearenal`). Verificar en `https://www.ovsicori.una.ac.cr/index.php/camaras`
+   que la URL de la imagen sigue el patrón:
+   `https://www.ovsicori.una.ac.cr/images/stories/camaras/{feedSlug}/camara.jpg`
+2. **Título corto** — nombre que aparece en la lista y en la barra superior (ej. `Arenal`)
+3. **Volcán al que pertenece** — para la agrupación en el listado. Opciones actuales:
+   `volcano_turrialba`, `volcano_irazu`, `volcano_poas`, `volcano_rincon_vieja`.
+   Si es un volcán nuevo, se crea un string nuevo.
+4. **Texto de info** — descripción de la ubicación en español (ej. "Cámara en el cráter del
+   volcán Arenal. La imagen se refresca cada 5 segundos.")
+5. **Mensaje al compartir** — texto base sin fecha (ej. `Volcán Arenal`)
 
-## Step 2: Determine the new position index
+Si el usuario ejecutó `/add-camera <nombre>` con un argumento, pre-completa lo que puedas
+y pedí solo lo que falta.
 
-Read `app/src/main/java/krausoft/volcanesdecostarica/NavigationDrawerFragment.java` and count the items currently in the `titles` array inside `getData()`. The new camera's position = current count (0-indexed).
+## Paso 2: Agregar strings en strings_cameras.xml
 
-## Step 3: Add string resources
+Archivo: `app/src/main/res/values/strings_cameras.xml`
 
-Edit `app/src/main/res/values/strings.xml`. Add these entries before `</resources>`:
+Agregar dentro de `<resources>`, bajo el comentario del volcán correspondiente
+(o crear un bloque nuevo si es un volcán nuevo):
 
 ```xml
-<string name="{id}">CAMERA_NAME</string>
-<string name="{id}_feed">FEED_SLUG</string>
-<string name="{id}_info"><tt>INFO_TEXT</tt></string>
-<string name="Mensaje{N}">SHARE_MESSAGE</string>
+<!-- Arenal -->
+<string name="cam_arenal_title">Arenal</string>
+<string name="cam_arenal_info">TEXTO_INFO</string>
+<string name="cam_arenal_share">Volcán Arenal</string>
 ```
 
-Where `{id}` is a short identifier (e.g., `arenal`), and `{N}` is `current_count + 1` (Mensaje strings are 1-indexed).
-
-## Step 4: Add to the navigation drawer title list
-
-Edit `NavigationDrawerFragment.getData()` in `NavigationDrawerFragment.java`. Add `context.getResources().getString(R.string.{id})` to the `titles` array.
-
-```java
-String[] titles = { ..., context.getResources().getString(R.string.{id}) };
+Si es un volcán nuevo, agregar también el string de grupo:
+```xml
+<string name="volcano_arenal">Arenal</string>
 ```
 
-## Step 5: Add URL case in PhotoLiveViewer.onCreate()
+Usar un prefijo `cam_{slug_sin_live}_` como convención (ej. `cam_arenal_` para `livearenal`).
 
-In `PhotoLiveViewer.java`, find the `switch (option)` block in `onCreate()` (around line 101). Add a new case at the end, before `default`:
+## Paso 3: Agregar la cámara en CameraRepository.kt
 
-```java
-case N:
-    url = url + getString(R.string.{id}_feed);
-    textView.setText(getString(R.string.{id}_info));
-    break;
+Archivo: `app/src/main/java/krausoft/volcanesdecostarica/data/CameraRepository.kt`
+
+Agregar una línea en la lista `cameras`, en el orden geográfico/lógico que corresponda:
+
+```kotlin
+camera("livearenal", R.string.cam_arenal_title, R.string.cam_arenal_info, R.string.cam_arenal_share, R.string.volcano_arenal),
 ```
 
-Where `N` is the new position index from Step 2.
+Si el volcán ya existe en el catálogo, usar su string de grupo (ej. `R.string.volcano_poas`).
 
-## Step 6: Add timer case in PhotoLiveViewer.startTimer()
+**Eso es todo.** No hay más archivos que editar.
 
-In the `switch (option)` block inside `startTimer()` (around line 186). Add a new case:
+## Paso 4: Verificar
 
-```java
-case N:
-    period = Long.parseLong(getString(R.string.TIMER_CONSTANT));
-    break;
+```bash
+source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk use java 17.0.11-tem
+./gradlew assembleDebug    # debe compilar sin errores
+./gradlew test             # los 6 tests de CameraRepositoryTest deben seguir verdes
 ```
 
-## Step 7: Add sharing case in PhotoLiveViewer.sharePicture()
+Recordarle al usuario que pruebe en dispositivo o emulador que:
+- La nueva cámara aparece en el listado bajo su volcán
+- El thumbnail carga correctamente
+- El auto-refresco funciona (cada 5 s)
+- Compartir incluye el mensaje correcto con fecha
 
-In the `switch (option)` block inside `sharePicture()` (around line 312). Add a new case:
+## Referencia rápida
 
-```java
-case N:
-    mensaje = getString(R.string.Mensaje{N_1indexed}) +
-            " [" + date + "]";
-    break;
 ```
-
-## Step 8: Confirm
-
-After all edits, summarize the changes made and remind the user to:
-- Build with `./gradlew assembleDebug` to verify no compilation errors
-- Test on a device or emulator to confirm the camera appears and loads
+URL de imagen: https://www.ovsicori.una.ac.cr/images/stories/camaras/{feedSlug}/camara.jpg?t={ms}
+Refresco:      5 000 ms para todas las cámaras (DEFAULT_REFRESH_MS en CameraRepository)
+Volcanes actuales: Turrialba (1 cam), Irazú (1), Póas (3), Rincón de la Vieja (3)
+```
