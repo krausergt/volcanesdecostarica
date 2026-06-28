@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Anima volcano_group simultáneamente en 3 ejes para un arranque más dinámico:
+    • scaleX / scaleY: crece de 0.2 a 1.0 con overshoot (rebote).
+    • translateY: sube 142 unidades (30dp en viewport 108 × 512/108) (los picos "emergen" desde abajo).
+  Duración total: 550ms. Los tres valores arrancan juntos.
+-->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:ordering="together">
+    <objectAnimator
+        android:duration="550"
+        android:interpolator="@android:interpolator/overshoot"
+        android:propertyName="scaleX"
+        android:valueFrom="0.2"
+        android:valueTo="1"
+        android:valueType="floatType" />
+    <objectAnimator
+        android:duration="550"
+        android:interpolator="@android:interpolator/overshoot"
+        android:propertyName="scaleY"
+        android:valueFrom="0.2"
+        android:valueTo="1"
+        android:valueType="floatType" />
+    <objectAnimator
+        android:duration="500"
+        android:interpolator="@android:interpolator/decelerate_cubic"
+        android:propertyName="translateY"
+        android:valueFrom="142"
+        android:valueTo="0"
+        android:valueType="floatType" />
+</set>

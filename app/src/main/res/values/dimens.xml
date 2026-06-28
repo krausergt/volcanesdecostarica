@@ -1,5 +1,0 @@
-<resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="nav_drawer_width">280dp</dimen>
-    <dimen name="tool_bar_top_padding">0dp</dimen>
-</resources>

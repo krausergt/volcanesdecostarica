@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  AnimatedVectorDrawable para la pantalla de bienvenida.
+  La animación "volcano_group" combina escala + subida vertical:
+  los picos emergen desde abajo con un leve rebote (≈550ms total).
+-->
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/ic_splash_vector">
+
+    <target
+        android:name="volcano_group"
+        android:animation="@animator/splash_volcano_scale" />
+</animated-vector>

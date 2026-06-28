@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<full-backup-content>
-    <!-- Exclude the shared preferences file that contains the GCM registrationId -->
-    <exclude
-        domain="sharedpref"
-        path="testpref.xml" />
-</full-backup-content>
+<!--
+  Reglas de copia de seguridad. Por ahora sin exclusiones específicas;
+  la app no almacena datos sensibles en SharedPreferences ni DataStore.
+-->
+<full-backup-content />

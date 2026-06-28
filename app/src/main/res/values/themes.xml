@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      Tema de la ventana durante el arranque (SplashScreen).
+      postSplashScreenTheme restaura el tema real de la app en cuanto Compose
+      toma el control; MainActivity llama installSplashScreen() antes de super.onCreate().
+    -->
+    <style name="Theme.VolcanesCostaRica" parent="Theme.SplashScreen">
+        <!-- Fondo de pantalla: LavaRed, visible desde el primer frame (evita el negro). -->
+        <item name="windowSplashScreenBackground">#BF360C</item>
+        <!-- Ícono animado: picos emergen desde abajo con escala + rebote. -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_animated</item>
+        <!-- Círculo detrás del ícono: blanco crema, contraste máximo sobre LavaRed. -->
+        <item name="windowSplashScreenIconBackgroundColor">#FFF8F6</item>
+        <!-- Tema real que hereda la UI Compose una vez que termina el splash. -->
+        <item name="postSplashScreenTheme">@style/Theme.App</item>
+    </style>
+
+    <!-- Tema base de la ventana Compose: sin ActionBar, sin color propio (Compose lo gestiona). -->
+    <style name="Theme.App" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
