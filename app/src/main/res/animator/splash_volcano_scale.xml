@@ -2,7 +2,7 @@
 <!--
   Anima volcano_group simultáneamente en 3 ejes para un arranque más dinámico:
     • scaleX / scaleY: crece de 0.2 a 1.0 con overshoot (rebote).
-    • translateY: sube 30dp (los picos "emergen" desde abajo).
+    • translateY: sube 142 unidades (30dp en viewport 108 × 512/108) (los picos "emergen" desde abajo).
   Duración total: 550ms. Los tres valores arrancan juntos.
 -->
 <set xmlns:android="http://schemas.android.com/apk/res/android"
@@ -25,7 +25,7 @@
         android:duration="500"
         android:interpolator="@android:interpolator/decelerate_cubic"
         android:propertyName="translateY"
-        android:valueFrom="30"
+        android:valueFrom="142"
         android:valueTo="0"
         android:valueType="floatType" />
 </set>
