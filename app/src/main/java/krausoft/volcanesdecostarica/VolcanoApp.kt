@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import krausoft.volcanesdecostarica.ui.about.AboutScreen
 import krausoft.volcanesdecostarica.ui.camera.CameraScreen
 import krausoft.volcanesdecostarica.ui.home.HomeScreen
 
@@ -18,7 +19,13 @@ fun VolcanoApp() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Routes.HOME) {
         composable(Routes.HOME) {
-            HomeScreen(onCameraClick = { id -> navController.navigate(Routes.camera(id)) })
+            HomeScreen(
+                onCameraClick = { id -> navController.navigate(Routes.camera(id)) },
+                onAboutClick = { navController.navigate(Routes.ABOUT) },
+            )
+        }
+        composable(Routes.ABOUT) {
+            AboutScreen(onBack = { navController.popBackStack() })
         }
         composable(
             route = Routes.CAMERA,
@@ -30,9 +37,10 @@ fun VolcanoApp() {
     }
 }
 
-/** Rutas de navegación y helper para construir la ruta del visor con su id. */
+/** Rutas de navegación y helpers para construir rutas parametrizadas. */
 private object Routes {
     const val HOME = "home"
+    const val ABOUT = "about"
     const val ARG_CAMERA_ID = "cameraId"
     const val CAMERA = "camera/{$ARG_CAMERA_ID}"
 

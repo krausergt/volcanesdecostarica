@@ -26,11 +26,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Article
 import androidx.compose.material.icons.filled.CameraAlt
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -75,13 +77,25 @@ private enum class NavTab(val labelRes: Int, val icon: ImageVector) {
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(onCameraClick: (String) -> Unit) {
+fun HomeScreen(onCameraClick: (String) -> Unit, onAboutClick: () -> Unit) {
     var selectedTab by remember { mutableStateOf(NavTab.CAMERAS) }
     // Agrupa las cámaras por volcán preservando el orden del catálogo.
     val groups = remember { CameraRepository.cameras.groupBy { it.volcanoGroupRes } }
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text(stringResource(R.string.app_name)) }) },
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(R.string.app_name)) },
+                actions = {
+                    IconButton(onClick = onAboutClick) {
+                        Icon(
+                            imageVector = Icons.Filled.Info,
+                            contentDescription = stringResource(R.string.about_title),
+                        )
+                    }
+                },
+            )
+        },
         bottomBar = {
             NavigationBar {
                 NavTab.entries.forEach { tab ->
