@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   Frente del ícono adaptativo, viewport 108×108dp.
-  Silueta del ícono original: cadena de dos picos con base plana,
-  más un slash diagonal blanco (material-design highlight) que replica
-  el efecto de luz del web_hi_res_512.png.
+  Geometría derivada del SVG web_hi_res_512.svg, escalada de 512px a 108dp
+  (factor 0.231, centrado en 54,54). Sin el borde negro squircle del SVG original.
 
-  La paleta usa LavaRed (#BF360C) de la app en lugar del naranja original.
-  El slash blanco solo es visible sobre la silueta LavaRed; sobre el fondo
-  blanco del background layer resulta invisible — no requiere clip-path.
+  Paleta: LavaRed #BF360C adapta el naranja original #FC5723 a los colores de la app.
+  Slash blanco: visible solo sobre la silueta LavaRed; invisible sobre el fondo blanco.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
@@ -16,25 +14,26 @@
     android:viewportHeight="108">
 
     <!--
-      Silueta de la cadena montañosa: ruta única conectada.
-        (20,76)  base izquierda
-        (36,32)  ápice pico izquierdo (secundario)
-        (50,48)  valle entre picos
-        (62,20)  ápice pico derecho (principal, más alto)
-        (88,76)  base derecha
+      Silueta de la cadena montañosa con curvas suaves (bezier), fiel al SVG:
+        (12,78)  base izquierda
+        (34,29)  ápice pico izquierdo (secundario)
+        (47,43)  valle entre picos
+        (62,23)  ápice pico derecho (principal, más alto)
+        (98,78)  base derecha
+      Coordenadas derivadas del path #FC5723 del SVG, escaladas de 512px a 108dp.
     -->
     <path
         android:fillColor="#BF360C"
-        android:pathData="M20,76 L36,32 L50,48 L62,20 L88,76 Z" />
+        android:pathData="M12,78 C18,64 26,48 34,29 Q40,36 47,43 Q55,36 62,23 C74,44 86,62 98,78 Z" />
 
     <!--
-      Slash diagonal blanco: reproduce el efecto de "rayo de luz" del
-      ícono original. Al quedar sobre el fondo blanco es invisible;
-      solo se percibe donde corta la silueta LavaRed.
-        (46,40) → (60,28)  borde superior del slash
-        (88,76) → (74,76)  borde inferior (a lo largo de la base)
+      Franja diagonal blanca (rayo de luz del SVG original).
+      Derivada del path #EDEAEA en translate(172,223) del SVG, escalada a 108dp:
+        top:    (34,36)–(41,33)  hombro del pico izquierdo
+        bottom: (50,78)–(57,78)  base de la montaña
+      Invisible sobre el fondo blanco; visible solo sobre la silueta LavaRed.
     -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M46,40 L60,28 L88,76 L74,76 Z" />
+        android:pathData="M34,36 L41,33 L57,78 L50,78 Z" />
 </vector>
