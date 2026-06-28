@@ -1,7 +1,8 @@
 package krausoft.volcanesdecostarica.ui.about
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,7 +10,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -81,11 +85,21 @@ fun AboutScreen(onBack: () -> Unit) {
         ) {
             Spacer(Modifier.height(32.dp))
 
-            Image(
-                painter = painterResource(R.mipmap.ic_launcher_round),
-                contentDescription = null,
-                modifier = Modifier.size(80.dp),
-            )
+            // painterResource no soporta íconos adaptativos (mipmap XML con capas);
+            // se reconstruye el ícono: fondo blanco circular + foreground VectorDrawable.
+            Box(
+                modifier = Modifier
+                    .size(80.dp)
+                    .clip(CircleShape)
+                    .background(Color.White),
+                contentAlignment = Alignment.Center,
+            ) {
+                androidx.compose.foundation.Image(
+                    painter = painterResource(R.drawable.ic_launcher_foreground),
+                    contentDescription = null,
+                    modifier = Modifier.size(80.dp),
+                )
+            }
 
             Spacer(Modifier.height(16.dp))
 
