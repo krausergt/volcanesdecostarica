@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   AnimatedVectorDrawable para la pantalla de bienvenida.
-  Fase 1 (0–600ms):   volcán crece desde la base con overshoot.
-  Fase 2 (350–800ms): llama ámbar se desvanece encima del cráter.
+  La animación "volcano_group" combina escala + subida vertical:
+  los picos emergen desde abajo con un leve rebote (≈550ms total).
 -->
 <animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:drawable="@drawable/ic_splash_vector">
@@ -10,8 +10,4 @@
     <target
         android:name="volcano_group"
         android:animation="@animator/splash_volcano_scale" />
-
-    <target
-        android:name="lava_flame"
-        android:animation="@animator/splash_lava_fade" />
 </animated-vector>

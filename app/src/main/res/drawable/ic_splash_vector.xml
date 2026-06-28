@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   Vector base para el splash screen animado.
-  Misma silueta de dos picos del ícono original, en blanco
-  para contrastar sobre el círculo naranja del splash.
-  Estado inicial: escala 0 (crece con la animación).
+  Misma silueta de dos picos en blanco (contraste sobre el círculo LavaRed).
+  Estado inicial: escala 0.2 + desplazada 30dp hacia abajo;
+  la animación la hace crecer y subir simultáneamente.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
@@ -11,30 +11,22 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!--
-      Pivot en la base central del conjunto de picos para que
-      el crecimiento sea de abajo hacia arriba.
-    -->
     <group
         android:name="volcano_group"
         android:pivotX="54"
-        android:pivotY="82"
-        android:scaleX="0"
-        android:scaleY="0">
+        android:pivotY="76"
+        android:scaleX="0.2"
+        android:scaleY="0.2"
+        android:translateY="30">
 
-        <!-- Pico izquierdo (detrás). -->
+        <!-- Silueta blanca de la cadena montañosa (misma geometría que el launcher). -->
         <path
             android:fillColor="#FFFFFF"
-            android:pathData="M18,82 L44,28 L68,82 Z" />
+            android:pathData="M20,76 L36,32 L50,48 L62,20 L88,76 Z" />
 
-        <!-- Pico derecho (delante). -->
+        <!-- Slash en blanco roto (#F0E8E6) para insinuar profundidad sobre blanco. -->
         <path
-            android:fillColor="#FFFFFF"
-            android:pathData="M38,82 L64,24 L90,82 Z" />
-
-        <!-- Sombra de valle: tono gris-blanco levemente más oscuro para mantener la profundidad. -->
-        <path
-            android:fillColor="#CCCCCC"
-            android:pathData="M44,28 L64,24 L52,48 Z" />
+            android:fillColor="#F0E8E6"
+            android:pathData="M46,40 L60,28 L88,76 L74,76 Z" />
     </group>
 </vector>
